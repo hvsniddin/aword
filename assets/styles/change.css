@@ -1,0 +1,133 @@
+
+/* .header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pfp {
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 20%;
+}
+
+.body {
+    padding: 1rem;
+    padding-top: 0;
+}
+
+.change-form {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.form-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.form-right {
+    justify-content: end;
+}
+
+.input {
+    height: 3rem;
+    padding-inline: 1rem;
+    outline: none;
+    border: none;
+    background-color: lightgray;
+    border-radius: 15px;
+}
+
+.btn {
+    background-color: lightgreen;
+}
+.btn:hover {
+    opacity: .8;
+}
+
+.delete {
+    background-color: red;
+    color: white;
+} */
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img-account-profile {
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.img-text {
+    margin-top: 5px;
+}
+.btn-img {
+    margin-top: 10px;
+}
+
+.bottom {
+    height: 100%;
+}
+
+form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.group-item {
+    width: 100%;
+}
+
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    color: #69707a;
+    background-color: #fff;
+    border: 1px solid #c5ccd6;
+    border-radius: 0.35rem;
+}
+
+.btn-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    border: none;
+    background-color: lightgreen;
+    padding: 0.875rem 1.125rem;
+    border-radius: .35rem;
+}
+
+.delete {
+    background-color: red;
+    color: white;
+}

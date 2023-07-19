@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+p {
+    display: inline;
+}
+
+/* @font-face {
+    font-family: "polaris";
+    src: url(../fonts/);
+} */

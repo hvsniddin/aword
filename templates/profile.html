@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+</head>
+    <body>
+        <div class="profile">
+            <div class="profile-head">
+                <img src="{% static 'pics/pfp/placeholder.png' %}" alt="Profile picture" class="profile-pic">
+                <div class="info-container head-section">
+                    <p class="username">{{ user.username }}</p>
+                    <p class="email">{{ user.email }}</p>
+
+                    <a href="/profile/change/">
+                        <button class="head-btn">Change</button>
+                    </a>
+
+                    <a href="/profile/logout/">
+                        <button class="logout head-btn">LOG OUT</button>
+                    </a>
+
+                </div>
+
+                <div class="balance-info head-section">
+                    <p class="coins">{{ user.coins }} COINS</p>
+                    <p class="game-points">{{ user.gps }} GP</p>
+                </div>
+                <!-- <img src="" alt="Head background" class="head-bg"> -->
+            </div>
+    
+            <div class="profile-body">
+                <div class="found-words">
+                    <p class="found-word" data-date="2023-23-5">SOMETHING</p>
+                </div>
+
+                <div class="actions">
+                    <button class="exchange-coins action-btn">Exchange coins</button>
+                    <button class="sotre action-btn">Store</button>
+                    <button class="help action-btn">Help</button>
+                </div>
+    
+            </div>
+        </div>
+
+        
+
+    </body>
+</html>

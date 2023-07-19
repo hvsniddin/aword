@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Hunter</title>
+
+    <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/game.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+
+    <script src="{% static 'scripts/game.js' %}" defer></script>
+</head>
+    <body>
+        <div class="menu" data-open="true">
+
+            <div class="menu-top">
+                <img src="{% static 'pics/picture.jpg' %}" alt="Logo" class="pic">
+            </div>
+
+            <div class="menu-bottom">
+                <div class="menu-buttons">
+                    <button class="play menu-btn" onclick="play()">Play</button>
+                    <form action="/profile/" method="post"> {% csrf_token %}
+                        <button type="submit" class="profile menu-btn">Profile</button>
+                    </form>
+
+
+
+                    <div class="footer">
+                        <ul class="menu-links">
+                            <li><a href="https://t.me/wordhuntergame_bot" target="_blank">
+                                <svg><use xlink:href="#telegram"></use></svg>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="game">
+            <div class="game-top">
+                <div class="word-container">
+                    <p data-found="true" class="word">S</p>
+                    <p data-found="false" class="word"></p>
+                    <p data-found="false" class="word"></p>
+                    <p data-found="true" class="word">F</p>
+                    <p data-found="true" class="word">A</p>
+                    <p data-found="false" class="word"></p>
+                </div>
+            </div>
+            
+            <div class="game-bottom">
+
+                <div class="info"></div>
+
+                <div class="input-container">
+                    <input type="text" name="letter" maxlength="1" class="letter">
+                    <button class="submit">Submit</button>
+                </div>
+
+                <div class="ads"></div>
+
+            </div>
+
+
+
+            
+
+            
+            
+
+            <div class="pause" onclick="pause()"> <div class="pause-icn"></div><div class="pause-icn"></div> </div>
+        </div>
+        
+
+
+        <script>
+            
+        </script>
+
+        <svg width="0" height="0" class="hidden">
+            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="-36 -60 312 360" id="telegram">
+                <defs>
+                  <linearGradient gradientUnits="userSpaceOnUse" y2="51.9" y1="11.536" x2="28.836" x1="46.136" id="a">
+                    <stop offset="0" stop-color="#37aee2"></stop>
+                    <stop offset="1" stop-color="#1e96c8"></stop>
+                  </linearGradient>
+                </defs>
+                <g transform="scale(3.4682)">
+                  <circle fill="url(#a)" r="34.6" cx="34.6" cy="34.6"></circle>
+                  <path fill="#fff" d="M14.4 34.3l23.3-9.6c2.3-1 10.1-4.2 10.1-4.2s3.6-1.4 3.3 2c-.1 1.4-.9 6.3-1.7 11.6l-2.5 15.7s-.2 2.3-1.9 2.7c-1.7.4-4.5-1.4-5-1.8-.4-.3-7.5-4.8-10.1-7-.7-.6-1.5-1.8.1-3.2 3.6-3.3 7.9-7.4 10.5-10 1.2-1.2 2.4-4-2.6-.6l-14.1 9.5s-1.6 1-4.6.1c-3-.9-6.5-2.1-6.5-2.1s-2.4-1.5 1.7-3.1z"></path>
+                </g>
+            </symbol>
+        </svg>
+
+
+    </body>
+</html>
