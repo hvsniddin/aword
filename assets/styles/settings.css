@@ -1,0 +1,60 @@
+.settings {
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.change-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.change-form div {
+    margin-bottom: 1rem;
+    width: 50%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input {
+    height: 2.5rem;
+    border: none;
+    padding: 1rem 1rem;
+    background-color: var(--mid);
+    border-radius: 5px;
+    width: 100%;   
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.save, .delete {
+    height: 2.5rem;
+    width: 5rem;
+    padding: .125rem .875rem;
+    background-color: var(--dark);
+    box-shadow: 0 6px 0 var(--xdark);
+    border: none;
+    border-radius: 5px;
+}
+
+.delete {
+    width: 7rem;
+    background-color: red;
+    box-shadow: 0 6px 0 rgb(255, 60, 60);
+}

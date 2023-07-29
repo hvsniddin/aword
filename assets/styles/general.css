@@ -6,10 +6,19 @@
     padding: 0;
 }
 
+:root {
+    --xlight: #fff9ae;
+    --light: #f8ed62;
+    --mid: #e9d700;
+    --dark: #dab600;
+    --xdark: #a98600;
+}
+
 body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: var(--xlight);
 }
 
 p {

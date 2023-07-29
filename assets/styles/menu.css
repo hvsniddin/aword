@@ -36,6 +36,7 @@
     justify-content: center;
     gap: 1rem;
     width: 15rem;
+    padding-inline: 2rem;
 }
 
 .menu-links {
@@ -52,8 +53,8 @@ svg {
 }
 
 .menu-btn  {
-    width: 100%;
-    height: 3rem;
+    width: 100% !important;
+    height: 3rem !important;
     border: none;
     border-radius: 5px;
 }

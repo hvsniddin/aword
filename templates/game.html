@@ -24,9 +24,9 @@
 
             <div class="menu-bottom">
                 <div class="menu-buttons">
-                    <button class="play menu-btn" onclick="play()">Play</button>
+                    <button class="play menu-btn btn" onclick="play()">Play</button>
                     <form action="/profile/" method="post"> {% csrf_token %}
-                        <button type="submit" class="profile menu-btn">Profile</button>
+                        <button type="submit" class="profile menu-btn btn">Profile</button>
                     </form>
 
 
@@ -62,7 +62,7 @@
 
                 <div class="input-container">
                     <input type="text" name="letter" maxlength="1" class="letter">
-                    <button class="submit">Submit</button>
+                    <button class="submit btn">Submit</button>
                 </div>
 
                 <div class="ads"></div>
@@ -76,7 +76,7 @@
             
             
 
-            <div class="pause" onclick="pause()"> <div class="pause-icn"></div><div class="pause-icn"></div> </div>
+            <button class="pause" onclick="pause()"> <div class="pause-icn"></div><div class="pause-icn"></div> </button>
         </div>
         
 

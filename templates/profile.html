@@ -10,47 +10,35 @@
 
     <link rel="stylesheet" href="{% static 'styles/general.css' %}">
     <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/settings.css' %}">
 </head>
     <body>
         <div class="profile">
             <div class="profile-head">
-                <img src="{% static 'pics/pfp/placeholder.png' %}" alt="Profile picture" class="profile-pic">
-                <div class="info-container head-section">
+                <div class="profile-head-section">
+                    <img src="{% static 'pics/pfp/placeholder.png' %}" alt="Profile picture" class="profile-pic">
                     <p class="username">{{ user.username }}</p>
                     <p class="email">{{ user.email }}</p>
-
-                    <a href="/profile/change/">
-                        <button class="head-btn">Change</button>
-                    </a>
-
-                    <a href="/profile/logout/">
-                        <button class="logout head-btn">LOG OUT</button>
-                    </a>
-
                 </div>
 
-                <div class="balance-info head-section">
-                    <p class="coins">{{ user.coins }} COINS</p>
-                    <p class="game-points">{{ user.gps }} GP</p>
-                </div>
-                <!-- <img src="" alt="Head background" class="head-bg"> -->
+                <ul class="profile-menu">
+                    <li data-selected="true">Stats</li>
+                    <li data-selected="false">Shop</li>
+                    <li data-selected="false">Settings</li>
+                    <li data-selected="false">Help</li>
+                    <li data-selected="false">FAQ</li>
+                </ul>
+
             </div>
-    
-            <div class="profile-body">
-                <div class="found-words">
-                    <p class="found-word" data-date="2023-23-5">SOMETHING</p>
-                </div>
 
-                <div class="actions">
-                    <button class="exchange-coins action-btn">Exchange coins</button>
-                    <button class="sotre action-btn">Store</button>
-                    <button class="help action-btn">Help</button>
-                </div>
+            <hr>
     
+
+            <div class="profile-body">
+                {% block content %}
+                {% endblock %}
             </div>
         </div>
-
         
-
     </body>
 </html>

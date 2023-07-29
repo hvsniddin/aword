@@ -16,7 +16,7 @@
     padding: 1rem;
     gap: 1rem;
     /* border: 1px solid blue; */
-    background-color: cyan;
+    background-color: var(--light);
     box-shadow: 0 0 7px rgba(0, 0, 0, .4);
 }
 
@@ -43,12 +43,13 @@
     padding-inline: 1rem;
     outline: none;
     border: none;
-    background-color: lightgray;
-    border-radius: 15px;
+    background-color: var(--mid);
+    border-radius: 10px;
 }
 
 .submit {
-    background-color: lightgreen;
+    background-color: var(--dark);
+    box-shadow: 0 6px 0 var(--xdark);
 }
 .submit:hover {
     opacity: .8;
