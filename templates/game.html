@@ -11,12 +11,11 @@
     <link rel="stylesheet" href="{% static 'styles/general.css' %}">
     <link rel="stylesheet" href="{% static 'styles/menu.css' %}">
     <link rel="stylesheet" href="{% static 'styles/game.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
 
     <script src="{% static 'scripts/game.js' %}" defer></script>
 </head>
     <body>
-        <div class="menu" data-open="true">
+        <dialog class="menu" data-open="true">
 
             <div class="menu-top">
                 <img src="{% static 'pics/picture.jpg' %}" alt="Logo" class="pic">
@@ -24,10 +23,8 @@
 
             <div class="menu-bottom">
                 <div class="menu-buttons">
-                    <button class="play menu-btn btn" onclick="play()">Play</button>
-                    <form action="/profile/" method="post"> {% csrf_token %}
-                        <button type="submit" class="profile menu-btn btn">Profile</button>
-                    </form>
+                    <button class="play menu-btn btn">Play</button>
+                    <a href="/profile/"><button type="submit" class="profile menu-btn btn">Profile</button></a>
 
 
 
@@ -42,17 +39,16 @@
             </div>
 
 
-        </div>
+        </dialog>
 
         <div class="game">
             <div class="game-top">
                 <div class="word-container">
-                    <p data-found="true" class="word">S</p>
+
+                    {% for letter in word.text %}
                     <p data-found="false" class="word"></p>
-                    <p data-found="false" class="word"></p>
-                    <p data-found="true" class="word">F</p>
-                    <p data-found="true" class="word">A</p>
-                    <p data-found="false" class="word"></p>
+                    {% endfor %}
+
                 </div>
             </div>
             
@@ -76,14 +72,8 @@
             
             
 
-            <button class="pause" onclick="pause()"> <div class="pause-icn"></div><div class="pause-icn"></div> </button>
+            <button class="pause"> <div class="pause-icn"></div><div class="pause-icn"></div> </button>
         </div>
-        
-
-
-        <script>
-            
-        </script>
 
         <svg width="0" height="0" class="hidden">
             <symbol xmlns="http://www.w3.org/2000/svg" viewBox="-36 -60 312 360" id="telegram">

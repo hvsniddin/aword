@@ -1,13 +1,13 @@
 .menu {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 10;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border: none;
+    background-color: transparent;
+}
+.menu::backdrop {
     backdrop-filter: brightness(.3) blur(10px);
 }
 
@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .pic {
@@ -55,20 +56,9 @@ svg {
 .menu-btn  {
     width: 100% !important;
     height: 3rem !important;
-    border: none;
-    border-radius: 5px;
 }
 
 .footer {
     display: flex;
     justify-content: space-around;
-}
-
-
-.menu[data-open="false"] {
-    display: none;
-}
-.menu[data-open="true"] .game {
-    pointer-events: none;
-    user-select: none;
 }

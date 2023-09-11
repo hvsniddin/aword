@@ -9,14 +9,12 @@
 .game-top {
     display: flex;
     align-items: center;
-
-    /* background-color: green; */
 }
 
 .word-container {
     width: 100%;
     display: flex;
-    padding-inline: 12.5%;
+    justify-content: space-around;
 }
 
 .word {
@@ -28,12 +26,23 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: var(--light);
+    background-color: var(--surface);
     border-radius: 5px;
-    transition: box-shadow 350ms;
+    transition: scale 350ms;
+    scale: .9;
 }
+.word-small {
+    height: 8vw;
+    font-size: 8vw;
+}
+.word-xsmall {
+    height: 6vw;
+    font-size: 6vw;
+}
+
 .word[data-found="false"]:hover {
-    box-shadow: 0 0 5px var(--xdark);
+    /* transform: translateY(-5px); */
+    scale: 1;
 }
 /* .word::after {
     content: "";
@@ -76,8 +85,9 @@
 .letter {
     border: none;
     text-align: center;
-    background-color: var(--light);
-    box-shadow: 0 0 5px var(--xdark);
+    background-color: var(--primary);
+    color: var(--on-primary);
+    /* box-shadow: 0 0 5px var(--xdark); */
     border-radius: 5px;
 
     font-size: 5rem;
@@ -89,23 +99,11 @@
     outline: none;
 }
 
-.btn {
-    position: relative;
-    border: none;
-    background-color: var(--dark);
-    box-shadow: 0 6px var(--xdark);
-
-    border-radius: 5px;
+.submit {
     width: 50%;
     height: 3.5rem;
-    aspect-ratio: 1;
 }
-.btn:active {
-    transform: translateY(6px);
-    box-shadow: none;
-    box-shadow: 0 0 5px var(--xdark) inset;
-}
-.info {
+/* .info {
     height: 75%;
     aspect-ratio: 1;
     margin-left: auto;
@@ -117,14 +115,14 @@
     aspect-ratio: 1;
     background-color: blue;
     margin-right: auto;
-}
+} */
 
 
 
 
 
 .pause {
-    background-color: var(--dark);
+    background-color: var(--secondary);
     width: 4rem;
     aspect-ratio: 1;
     border: none;
@@ -141,5 +139,5 @@
 .pause-icn {
     height: 100%;
     width: 0;
-    border: 2px solid black;
+    border: 2px solid var(--on-secondary);
 }

@@ -1,31 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Overlock', cursive;
 }
 
 :root {
-    --xlight: #fff9ae;
+    --background: #121212;
+    --surface: #1e1e1e;
+    /* --header: #1f1f1f; */
+    --primary: #bb86fc;
+    --secondary: #03dac6;
+    --on-background: #dedede;
+    --on-surface: #e1e1e1;
+    --on-primary: #000000;
+    --on-secondary: #000000;
+
+    /* --xlight: #fffdb8;
+    --light: #fdf68c;
+    --mid: #f4cd2a;
+    --dark: #eda323;
+    --xdark: #d28d0d; */
+
+    /* OLD */
+    /* --xlight: #fff9ae;
     --light: #f8ed62;
     --mid: #e9d700;
     --dark: #dab600;
-    --xdark: #a98600;
+    --xdark: #a98600; */
 }
 
 body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: var(--xlight);
+    background-color: var(--background);
 }
 
 p {
     display: inline;
 }
 
-/* @font-face {
-    font-family: "polaris";
-    src: url(../fonts/);
-} */
+.btn {
+    border: none;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-weight: bold;
+    /* box-shadow: 0 6px var(--dark); */
+    border-radius: 5px;
+    transition: transform 150ms;
+}
+.btn:hover {
+    transform: translateY(-2px);
+}
+.btn:active {
+    transform: translateY(0);
+    /* box-shadow: 0 0 5px var(--xdark) inset; */
+}
+
+@font-face {
+    font-family: "wonderboys";
+    src: url(../fonts/wonderboys.ttf) format('truetype');
+}

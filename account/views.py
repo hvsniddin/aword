@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Profile
+from .models import Profile, Word
 from django.contrib import messages
 from django.contrib.auth import login as lg
 from django.contrib.auth import logout as lo
 from django.contrib.auth import authenticate as auth
-
+from game.words import get_random
 import re
 
 # Create your views here.
@@ -13,7 +13,12 @@ def profile(r):
     if not r.user.is_authenticated:
         return redirect('login')
     
-    return render(r, 'profile.html')
+    found_words = r.user.word_set.filter(found=True)
+    data = {
+        "found_words": found_words
+    }
+    
+    return render(r, 'profile.html', data)
 
 def register(r):
 
@@ -75,11 +80,13 @@ def register(r):
             return redirect('/profile/register')
 
         user = Profile.objects.create(username=username, email=email)
+        word = Word.objects.create(user=user, text=get_random())
         user.set_password(password)
+        user.save()
         lg(r, user)
 
 
-        return redirect('/profile/')
+        return redirect('/')
     else: 
         form_data = r.session.pop('data', None)
         context = {'data': form_data}
@@ -137,9 +144,9 @@ def change(r):
 
         username = data.get('username')
         email = data.get('email')
-        password = data['password']
-        newPassword = data.get('newPassword')
-        newPasswordConf = data.get('newPasswordConf')
+        password = data.get('oldpsw')
+        newPassword = data.get('newpsw')
+        newPasswordConf = data.get('newpswconf')
 
         # Username validation
         if username and username!=user.username:
@@ -223,12 +230,6 @@ def change(r):
 
 
         return redirect('/profile/')
-
-
-    else: 
-        form_data = r.session.pop('data', None)
-        context = {'data': form_data}
-        return render(r, 'change-profile.html', context)
     
 def delete(r):
 

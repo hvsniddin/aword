@@ -1,6 +1,7 @@
 import random
 
-with open('words.txt', 'r') as f:
+path='game/words.txt'
+with open(path, 'r') as f:
     text = f.read()
 
 l = text.split()
