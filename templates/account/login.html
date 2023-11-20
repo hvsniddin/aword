@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/registration.css' %}">
+</head>
+    <body>
+        <div class="login registration-page">
+            <div class="login-container registration-container">
+                <!-- <img src="{% static 'pics/picture.jpg' %}" alt="Logo" class="logo"> -->
+                <h1>Log in</h1>
+                <h3 style="font-weight: normal;">Good to see you again</h3>
+                
+                
+                <div class="form-container">
+                    
+                    
+                    
+                    <form action="" method="post" class="registration-form login-form"> {% csrf_token %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if forloop.first %}
+                        <p class="error">
+                            {{ message }}
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <div class="input">
+                            <input type="text" name="username" placeholder=" ">
+                            <span>Username</span>
+                        </div>
+                        <div class="input">
+                            <input type="password" name="password" placeholder=" ">
+                            <span>Password</span>
+                        </div>
+                        <!-- <input type="text" placeholder="Username" name="username" value="{{data.username}}" class="username input">
+                        <input type="password" placeholder="Password" name="password" class="password input"> -->
+                        <p class="forgot-password"><a href="#">Forgot password?</a></p>
+                        <input type="submit" class="submit-login input btn" value="Login">
+                    </form>
+
+                
+                </div>
+
+                <p class="register-link">Don't have a profile? <a href="/user/register">Create one!</a></p> {% csrf_token %}
+            </div>
+        </div>
+
+
+    </body>
+</html>

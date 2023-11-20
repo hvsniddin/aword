@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <link rel="stylesheet" href="{% static 'styles/general.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/registration.css' %}">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'scripts/registration.js' %} " defer></script>
+</head>
+    <body>
+        <div class="registration-page">
+            <div class="registration-container">
+                <!-- <img src="{% static 'pics/picture.jpg' %}" alt="Logo" class="logo"> -->
+                <h1>Register</h1>
+                <h3 style="font-weight: normal;">Welcome!</h3>
+
+                <!-- <div class="form-container">
+
+                    
+                    <form action="/user/register/" method="post" class="registration-form"> {% csrf_token %}
+                        <p class="error">This is an error message</p>
+
+                        <div class="input">
+                            <input type="text" name="username" placeholder=" ">
+                            <span>Username</span>
+                        </div>
+                        <div class="input">
+                            <input type="email" name="email" placeholder=" ">
+                            <span>E-mail</span>
+                        </div>
+                        <div class="input">
+                            <input type="password" name="password" placeholder=" ">
+                            <span>Password</span>
+                        </div>
+                        <div class="input">
+                            <input type="password" name="password-conf" placeholder=" ">
+                            <span>Confirm password</span>
+                        </div>
+
+                        <p class="terms">By pressing Register, you acknowledge our <a href="#">Terms & Conditions</a></p>
+                        <input type="submit" class="submit input btn" value="Register">
+                    </form>
+
+                
+                </div> -->
+
+                <div class="registration-wrapper">
+                    <div class="steps-count-wrapper">
+                        <div class="counter counting"></div>
+                        <hr class="sub-counter">
+                        <div class="counter"></div>
+                        <hr class="sub-counter">
+                        <div class="counter"></div>
+                        <hr class="sub-counter">
+                        <div class="counter"></div>
+                    </div>
+
+                    
+                    <p class="error">{% if messages %}{% for message in messages %}{{message}}{% endfor %}{% endif %}</p>
+                    
+
+                    <form action="/user/register/" method="post" class="registration-form" novalidate> {% csrf_token %}
+                        <div class="step">
+                            <div class="step-wrapper">
+                                <div class="input">
+                                    <input class="info" type="text" name="username" placeholder=" " required>
+                                    <span>Username</span>
+                                </div>
+                                <div class="input">
+                                    <input class="info" type="email" name="email" placeholder=" " required>
+                                    <span>E-mail</span>
+                                </div>
+                                <p>Create a unique username and enter your e-mail</p>
+                            </div>
+                            <!-- Nuh uhh -->
+                        </div>
+    
+                        <div class="step">
+                            <div class="step-wrapper confirm-code-wrapper">
+                                <div class="code-input-wrapper">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                    <input type="number" maxlength="1" onkeydown="moveFocus(event, this)">
+                                </div>
+                                <p>Enter the confirmation code we've sent you via the e-mail you provided</p>
+                                <p class="disabled">If you didn't get the e-mail, reloading the page can resolve the issue.</p>
+                            </div>
+                        </div>
+
+
+                        <div class="step">
+                            <div class="step-wrapper">
+
+                                <div class="input">
+                                    <input class="password" type="password" name="password" placeholder=" " required>
+                                    <span>Password</span>
+                                </div>
+                                <div class="input">
+                                    <input class="password" type="password" name="password-conf" placeholder=" " required>
+                                    <span>Confirm password</span>
+                                </div>
+    
+                                <p>Now create a strong, reliable password</p>
+                            </div>
+                        </div>
+
+
+                        <div class="step">
+                            <div class="g-recaptcha"
+                                data-theme="dark"
+                                data-size="compact"
+                                data-callback="recaptchaSuccess" 
+                                data-expired-callback="recaptchaExpired"
+                                data-sitekey="6LdYwhQoAAAAAHnL1LrEbKL9Pbxp0-fZo1jQCiIZ"></div>
+
+                            <p>Almsot there. Prove that you are not a robot</p>
+                        </div>
+                    </form>
+
+                    <div class="nav-buttons">
+                        <button class="btn prev">Prev</button>
+                        <button class="btn next disabled">Next</button>
+                    </div>
+
+
+                </div>
+
+                <p class="register-link">Already a user? <a href="/profile/login">Login here!</a></p>
+            </div>
+        </div>
+
+
+    </body>
+</html>

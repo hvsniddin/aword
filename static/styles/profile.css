@@ -108,7 +108,7 @@ label {
     display: flex;
     gap: 1rem;
 }
-.section:nth-child(2) {
+.section:nth-child(1) {
     display: block;
 }
 /* ==================== */
@@ -124,6 +124,15 @@ label {
 }
 
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+.profile-card svg {
+    fill: var(--on-surface);
+    width: 24px;
+    height: 24px;
+    margin-left: 0.5rem;
+    margin-bottom: 2rem;
+    margin-top: .5rem;
+}
+
 .profile-card {
     width: 25%;
     min-width: 20rem;
@@ -139,11 +148,12 @@ label {
 .username{
     font-size: xx-large;
     margin-top: 1rem;
+    display: flex;
+    align-items: center;
 }
 .email {
     font-size: medium;
     opacity: .5;
-    margin-bottom: 2rem;
 }
 .profile-card-content {
     width: 100%;
@@ -156,14 +166,14 @@ label {
     display: block;
     background-color: var(--background);
     color: var(--on-background);
-    padding: 1rem;
+    padding: .9rem 1rem;
     border-radius: 20px;
-    font-size: large;
+    font-size: medium;
 }
 .profile-card-content p label {
     margin-bottom: .5rem;
     opacity: .5;
-    font-size: medium;
+    font-size: smaller;
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 

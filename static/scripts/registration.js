@@ -6,6 +6,11 @@ const info = document.querySelectorAll('.info');
 const password = document.querySelectorAll('.password');
 const stepCounters = document.querySelectorAll('.counter');
 const stepSubCounters = document.querySelectorAll('.sub-counter');
+const error = document.querySelector('.error');
+const recaptcha = document.querySelector('.g-recaptcha');
+// if (error.textContent!=='') {
+//     error.style.display = 'block';
+// }
 
 const codeInputs = document.querySelectorAll('.confirm-code-wrapper input[type="number"]');
 
@@ -17,6 +22,14 @@ var primary = getComputedStyle(document.documentElement).getPropertyValue('--pri
 var secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
 var onPrimary = getComputedStyle(document.documentElement).getPropertyValue('--on-primary');
 var onsecondary = getComputedStyle(document.documentElement).getPropertyValue('--on-secondary');
+
+steps.forEach(step => {
+    var el = step.querySelectorAll('button, input, a');
+    el.forEach(element => {
+        element.tabIndex = -1;
+    });
+});
+recaptcha.style.display = 'none';
 
 changeCurrent(0);
 
@@ -41,7 +54,11 @@ prev.addEventListener('click', () => {
     changeCurrent(-1);
 });
 next.addEventListener('click', () => {
-    changeCurrent(1);
+    if (next.classList.contains('submit') && !next.classList.contains('disabled')) {
+        container.submit();
+    } else {
+        changeCurrent(1);
+    }
 });
 
 
@@ -67,7 +84,44 @@ codeInputs.forEach((input, index) => {
         }
 
         if (filled) {
-            correctCode();     
+            document.activeElement.blur();
+            codeInputs.forEach(element => {
+                element.classList.add('disabled');
+            });
+            var code = '';
+            codeInputs.forEach(element => {
+                code+=element.value;
+            });
+            console.log(code);
+
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/profile/register/",
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
+                data: {
+                    requestedfor: 'verification',
+                    email: $(info[1]).val(),
+                    otp: code
+                },
+                success: function (data) {
+                    codeInputs.forEach(element => {
+                        element.classList.remove('disabled');
+                    });
+                    // alert(data.status);
+                    correctCode();
+                },
+                error: function (data) {
+                    codeInputs.forEach(element => {
+                        element.classList.remove('disabled');
+                    });
+                    // alert(data.status);
+                    wrongCode();
+                }
+            });
         }
     });
 });
@@ -82,6 +136,17 @@ function changeCurrent(c) {
 
     prev_curr = current;
     current+=c;
+
+    const el = steps[prev_curr].querySelectorAll('button, input, a');
+    el.forEach(element => {
+        element.tabIndex = -1;
+    });
+    const curr_el = steps[current].querySelectorAll('button, input, a');
+    curr_el.forEach(element => {
+        element.tabIndex = 1;
+    });
+    recaptcha.style.display = 'none';
+
 
     switch (current) {
         case 0:
@@ -120,26 +185,97 @@ function changeCurrent(c) {
             break;
 
         case 1:
-            changeCounter(1);
-            prev.style.display = 'block';
+            if (info[0].value.length < 4) {
+                var computedStyle = getComputedStyle(error);
+                var anim = computedStyle.animation;
 
-            if (!confirmEmail) {
-                next.classList.add('disabled');
-                codeInputs.forEach(element => {
-                    element.classList.remove('correct');
-                    element.value = '';
-                });
+                error.style.animation = 'none';
+                void error.offsetWidth;
+                error.style.animation = anim;
+
+                error.style.display = 'block';
+                error.textContent = 'Username is too short';
+
+                current-=c;
+
+                break;
             }
 
-            // TODO: send email
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
+            // CHECK USERNAME EXISTS
+            $.ajax({
+                type: "POST",
+                url: "/profile/register/",
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
+                data: {
+                    requestedfor: 'availibility',
+                    username: $(info[0]).val(),
+                    email: $(info[1]).val(),
+                },
+                success: function (data) {
+                    changeCounter(1);
+                    prev.style.display = 'block';
 
-            // SCROLL
-            if(prev_curr < current) {
-                container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' });
-            } else {
-                container.scrollBy({ left: -container.offsetWidth, behavior: 'smooth' });
-            }
+                    if (!confirmEmail) {
+                        codeInputs.forEach(element => {
+                            element.tabIndex = 1;
+                            element.style.pointerEvents = ''
+                        });
+                        next.classList.add('disabled');
+                        codeInputs.forEach(element => {
+                            element.classList.remove('correct');
+                            element.value = '';
+                        });
+                        // TODO: send email
+                        $.ajax({
+                            type: "POST",
+                            url: "/profile/register/",
+                            headers: {
+                                "X-CSRFToken": csrftoken
+                            },
+                            data: {
+                                requestedfor: 'registration',
+                                email: $(info[1]).val(),
+                            },
+                            error: function () {
+                                current-=c;
+                                return;
+                            }
+                        });
+                    } else {
+                        codeInputs.forEach(element => {
+                            element.tabIndex = -1;
+                        });
+                    }
+                    
+
+                    // SCROLL
+                    if(prev_curr < current) {
+                        container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' });
+                    } else {
+                        container.scrollBy({ left: -container.offsetWidth, behavior: 'smooth' });
+                    }
+                },
+                error: function (data) {
+                    var computedStyle = getComputedStyle(error);
+                    var anim = computedStyle.animation;
+
+                    error.style.animation = 'none';
+                    void error.offsetWidth;
+                    error.style.animation = anim;
+
+                    error.style.display = 'block';
+                    error.textContent = data.responseJSON.status;
+                    current -= c;
+                    return;
+                }
+            });
+
+            
+            
             break;
             
         case 2:
@@ -179,6 +315,56 @@ function changeCurrent(c) {
 
         
         case 3:
+            recaptcha.style.display = 'flex';
+
+            // CHECK PASSWORD
+            var pas = password[0].value;
+            var pasconf = password[1].value;
+
+            if (!(is_valid_password(pas))) {
+                var computedStyle = getComputedStyle(error);
+                var anim = computedStyle.animation;
+
+                error.style.animation = 'none';
+                void error.offsetWidth;
+                error.style.animation = anim;
+
+                error.style.display = 'block';
+                error.textContent = 'Password must contain numbers AND letters';
+
+                current-=c;
+
+                break;
+            } else if (pas !== pasconf) {
+                var computedStyle = getComputedStyle(error);
+                var anim = computedStyle.animation;
+
+                error.style.animation = 'none';
+                void error.offsetWidth;
+                error.style.animation = anim;
+
+                error.style.display = 'block';
+                error.textContent = 'Passwords do not match';
+                
+                current-=c;
+
+                break;
+            } else if (pas.length < 6) {
+                var computedStyle = getComputedStyle(error);
+                var anim = computedStyle.animation;
+
+                error.style.animation = 'none';
+                void error.offsetWidth;
+                error.style.animation = anim;
+
+                error.style.display = 'block';
+                error.textContent = 'Passwords must be at least 6 characters';
+                
+                current-=c;
+
+                break;
+            }
+
             changeCounter(3);
             next.classList.add('submit', 'disabled');
             next.textContent = 'SUBMIT';
@@ -227,6 +413,8 @@ function wrongCode() {
 
 function correctCode() {
     codeInputs.forEach((element, index) => {
+        element.tabIndex = -1;
+        element.style.pointerEvents = 'none'
         setTimeout(() => {
             element.classList.add('correct');
         }, index* 70);
@@ -265,4 +453,9 @@ function changeCounter(c) {
         stepSubCounters[i].classList.add('counted');
     }
     stepCounters[c].classList.add('counting');
+}
+
+function is_valid_password(password) {
+    var regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+    return regex.test(password);
 }

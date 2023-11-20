@@ -1,29 +1,91 @@
+from datetime import date
 from django.shortcuts import render, redirect
-from .models import Profile, Word
+from django.http import HttpResponse, JsonResponse
+from .models import User, Word
 from django.contrib import messages
+
 from django.contrib.auth import login as lg
 from django.contrib.auth import logout as lo
 from django.contrib.auth import authenticate as auth
+from django.db.models import QuerySet
+
+from django.core.mail import send_mail
 from game.words import get_random
-import re
+import re, random, string
 
-# Create your views here.
 def profile(r):
-
     if not r.user.is_authenticated:
         return redirect('login')
     
-    found_words = r.user.word_set.filter(found=True)
+    words: QuerySet = r.user.words.all()
+    found_words = [word for word in words if word.found]
+    word = Word.objects.filter(user=r.user, date=date.today()).first()
+
+    sorted_date = words.order_by('date')
+    # sorted_length = words.order_by('length')
+    sorted_wrongattempts = words.order_by('wrong_attempts')
+    print(sorted_wrongattempts)
+    sorted_profit = words.order_by('?')
+    table = [sorted_date, sorted_wrongattempts, sorted_profit]
+
+
     data = {
-        "found_words": found_words
+        "word": word,
+        "found_words": found_words,
+        "table": table
     }
-    
-    return render(r, 'profile.html', data)
+
+
+
+    return render(r, 'account/profile.html', data)
+
+
+def user(r, username):
+    return HttpResponse('In development')
+
 
 def register(r):
-
     if r.user.is_authenticated:
-        return redirect('/profile')
+        return redirect('profile')
+
+    if r.headers.get('x-requested-with') == 'XMLHttpRequest':
+        otp = r.POST.get('otp')
+        for_ = r.POST.get('requestedfor')
+
+        if for_ == 'registration':
+            # This is a registration request
+            email = r.POST['email']
+            otp = generate_otp()
+            send_mail(
+                'Word Hunter game e-mail address verification',
+                f'Your verification code for Word Hunter game is {otp}\n\nIf you haven\'t requested for one, simply ignore the message.',
+                'ravshanovhusniddin.2006@gmail.com',
+                [email],
+                fail_silently=False,
+            )
+            r.session['otp'] = otp
+            return JsonResponse({'status': 'sent'})
+        elif for_ == 'verification':
+            # This is an OTP verification request
+            print(otp)
+            print(r.session['otp'])
+            print(otp == r.session['otp'])
+            if otp == r.session['otp']:
+                del r.session['otp']
+                return JsonResponse({'status': 'verified'})
+            else:
+                return JsonResponse({'status': 'Incorrect code'}, status=400)
+        elif for_ == 'availibility':
+            username = r.POST.get('username')
+            email = r.POST['email']
+            user_username = User.objects.filter(username=username)
+            user_email = User.objects.filter(email=email)
+            if user_username.exists():
+                return JsonResponse({'status':'Username is taken'}, status=400)
+            if user_email.exists():
+                return JsonResponse({'status':'E-mail is already in use'}, status=400)
+            else:
+                return JsonResponse({'status':'username available'})
 
     if r.method == 'POST':
         # Get the data from the form
@@ -33,70 +95,30 @@ def register(r):
         password_conf = r.POST.get('password-conf')
 
         # Clear the previous session data
-        data = r.session.pop('data', {})
+        # data = r.session.pop('data', {})
 
-        # Username validation
-        if is_valid_username(username)[0] == False:
-            messages.info(r, is_valid_username(username)[1])
-
-            r.session['data'] = {'username': username, 'email': email}
-            r.session.save()
-
-            return redirect('/profile/register')
+        if is_valid_username(username)[0] == False or not is_valid_email(email) and is_valid_password(password)[0] == False or password!=password_conf or password == username:
+            messages.info(r, 'Error occured, try again later')
+            return redirect('/user/register')
 
 
-        # E-mail validation
-        if not is_valid_email(email):
-            messages.info(r, "Invalid e-mail")
 
-            r.session['data'] = {'username': username, 'email': email}
-            r.session.save()
-
-            return redirect('/profile/register')
-
-        # Password validation
-        if is_valid_password(password)[0] == False:
-            messages.info(r, is_valid_password(password)[1])
-
-            r.session['data'] = {'username': username}
-            r.session.save()
-
-            return redirect('/profile/register')
-        
-        elif password!=password_conf:
-            messages.info(r, "Passwords do not match")
-
-            r.session['data'] = {'username': username}
-            r.session.save()
-
-            return redirect('/profile/register')     
-        
-        elif password == username:
-            messages.info(r, "Password should not be the same with username")
-
-            r.session['data'] = {'username': username, 'email': email}
-            r.session.save()
-
-            return redirect('/profile/register')
-
-        user = Profile.objects.create(username=username, email=email)
-        word = Word.objects.create(user=user, text=get_random())
+        user = User.objects.create(username=username, email=email)
         user.set_password(password)
         user.save()
+        word = Word.objects.create(user=user, text=get_random())
         lg(r, user)
 
 
         return redirect('/')
-    else: 
-        form_data = r.session.pop('data', None)
-        context = {'data': form_data}
-        return render(r, 'register.html', context)
+    
+    return render(r, 'account/register.html')
 
 
 def login(r):
 
     if r.user.is_authenticated:
-        return redirect('/profile/')
+        return redirect('profile')
 
     if r.method == "POST":
         username = r.POST['username']
@@ -112,7 +134,7 @@ def login(r):
             r.session['data'] = {'username': username}
             r.session.save()
 
-            return redirect('/profile/login')
+            return redirect('login')
         
         else:
             lg(r, user)
@@ -121,12 +143,12 @@ def login(r):
     else: 
         form_data = r.session.pop('data', None)
         context = {'data': form_data}
-        return render(r, 'login.html', context)
+        return render(r, 'account/login.html', context)
 
 def logout(r):
 
     if not r.user.is_authenticated:
-        return redirect('/profile/login')
+        return redirect('login')
 
     lo(r)
     return redirect('/')
@@ -134,7 +156,7 @@ def logout(r):
 def change(r):
 
     if not r.user.is_authenticated:
-        return redirect('/profile/login')
+        return redirect('login')
 
     if r.method == 'POST':
         user = r.user
@@ -156,7 +178,7 @@ def change(r):
                 r.session['data'] = {'username': username, 'email': email}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
 
             else:
                 user.username = username
@@ -174,7 +196,7 @@ def change(r):
                 r.session['data'] = {'username': username, 'email': email}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
 
         # Password validation
         if password:
@@ -186,7 +208,7 @@ def change(r):
                 r.session['data'] = {'username': username, 'email': email}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
             
             elif is_valid_password(newPassword)[0] == False:
                 messages.info(r, is_valid_password(newPassword)[1])
@@ -194,7 +216,7 @@ def change(r):
                 r.session['data'] = {'username': username}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
             
             elif newPassword!=newPasswordConf:
                 messages.info(r, "New passwords do not match")
@@ -202,7 +224,7 @@ def change(r):
                 r.session['data'] = {'username': username}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
             
             elif password==newPassword:
                 messages.info(r, "New passwords cannot be the same with the old password")
@@ -210,7 +232,7 @@ def change(r):
                 r.session['data'] = {'username': username, 'email': email}
                 r.session.save()
 
-                return redirect('/profile/change')     
+                return redirect('change')     
             
             elif newPassword == username or newPassword == user.username:
                 messages.info(r, "Password should not be the same with username")
@@ -218,7 +240,7 @@ def change(r):
                 r.session['data'] = {'username': username, 'email': email}
                 r.session.save()
 
-                return redirect('/profile/change')
+                return redirect('change')
 
             else:
                 user.set_password(newPassword)
@@ -229,32 +251,32 @@ def change(r):
 
 
 
-        return redirect('/profile/')
+        return redirect('profile')
     
 def delete(r):
 
     if not r.user.is_authenticated:
-        return redirect('/profile/login')
+        return redirect('login')
 
-    user = Profile.objects.get(username=r.user.username)
+    user = User.objects.get(username=r.user.username)
     user.delete()
 
 
     return redirect('/')
 
 
-
 # Validity functions
 def is_valid_username(u):
     regex = r'^[a-zA-Z][a-zA-Z0-9._]*$'
 
-    if Profile.objects.filter(username=u).exists(): return (False, 'Username is taken')
+    if User.objects.filter(username=u).exists(): return (False, 'Username is taken')
     elif 3 > len(u) > 21: return (False, 'Username must be between 4-20 letters')
     elif not bool(re.search(regex, u)): return (False, 'Invalid username: must start with a letter, can contain numbers and "_", "."')
     
     return (True, None)
 
 def is_valid_email(e):
+    if User.objects.filter(email=e).exists(): return (False, 'E-mail is taken')
     regex = r'^([a-z0-9_.-]+)@([\\da-z.-]+)\.([a-z.]{2,6})$'
     return bool(re.search(regex, e))
 
@@ -267,3 +289,7 @@ def is_valid_password(p):
     elif p.isdigit(): return (False, "Password must contain letters")
 
     return (True, None)
+
+# ADDITIONAL
+def generate_otp():
+    return ''.join(random.choice(string.digits) for _ in range(6))
