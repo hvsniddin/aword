@@ -1,3 +1,17 @@
+@keyframes rotate-v {
+    from {
+        transform: rotateY('0');
+    }
+    to {
+        transform: rotateY('180');
+    }
+}
+.rotate-v {
+	-webkit-animation: rotate-vert-center 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) ;
+	        animation: rotate-vert-center 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) ;
+}
+
+
 .game {
     width: 100%;
     height: 100%;
@@ -45,21 +59,10 @@
     /* transform: translateY(-5px); */
     scale: 1;
 }
-/* .word::after {
-    content: "";
-    border: 2px solid black;
-    width: 7rem;
-    display: block;
-    position: absolute;
-    bottom: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
+
+.word:active {
+    animation: rotate-v 1s forwards;
 }
-.word[data-found="true"]::after {
-    border: none;
-}
-.word[data-found="false"] {
-} */
 
 .game-bottom {
     display: flex;

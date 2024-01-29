@@ -5,12 +5,12 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-CELERY_BEAT_SCHEDULE = {
-    'update_word': {
-        'task': 'game.tasks.update_word',
-        'schedule': timedelta(days=1),
-    },
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'update_word': {
+#         'task': 'game.tasks.update_word',
+#         'schedule': timedelta(days=1),
+#     },
+# }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,15 +21,28 @@ SECRET_KEY = 'django-insecure-1=x3+-+wcu20-(dumkl#@16ane0(atv)_*j654mdd0vauc!6s0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.21.88', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+CORS_ALLOWED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

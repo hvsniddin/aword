@@ -45,11 +45,28 @@
             <div class="game-top">
                 <div class="word-container">
 
+
+                    <!-- <div class="word">
+                        <div class="w-front">f</div>
+                        <div class="w-back">b</div>
+                    </div> -->
+
+
                     {% for letter in word.text %}
                     {% if letter in word.letters %}
-                    <p data-found="true" class="word">{{letter}}</p>
+
+                    <div data-found="true" class="word">
+                        <div class="w-front"></div>
+                        <div class="w-back">{{letter}}</div>
+                    </div>
+                    
                     {% else %}
-                    <p data-found="false" class="word"></p>
+                    
+                    <div data-found="false" class="word">
+                        <div class="w-front"></div>
+                        <div class="w-back"></div>
+                    </div>
+                    
                     {% endif %}
                     {% endfor %}
 
@@ -57,18 +74,6 @@
             </div>
             
             <div class="game-bottom">
-
-                <!-- <div class="info"></div> -->
-                <!-- <div class="ads"></div> -->
-
-                <!-- <div class="input-container">
-                    <div class="input-cover">
-                        <input type="text" name="letter" maxlength="1" class="letter">
-
-                    </div>
-                    <button class="submit btn">Submit</button>
-                </div> -->
-
 
                 <div class="keyboard-container">
                     <div class="keyboard-row">
@@ -95,7 +100,7 @@
                         <div class="keyboard-button" tabindex="-1">l</div>
                     </div>
                     <div class="keyboard-row">
-                        <div class="keyboard-button" tabindex="-1">BACK</div>
+                        <div class="keyboard-button" tabindex="-1">CLEAR</div>
                         <div class="keyboard-button" tabindex="-1">z</div>
                         <div class="keyboard-button" tabindex="-1">x</div>
                         <div class="keyboard-button" tabindex="-1">c</div>

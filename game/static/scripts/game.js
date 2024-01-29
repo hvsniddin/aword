@@ -23,3 +23,23 @@ if (letterCount>9 && letterCount<12) {
         element.classList.add('word-xsmall');
     });
 }
+
+
+letters.forEach(element => {
+    element.addEventListener("click", function() {
+        if (element.getAttribute('data-found') === "true") {
+            return;
+        }
+
+        
+
+        element.classList.add('rotate-v');
+        element.setAttribute('data-found', 'true');
+
+
+    });
+    
+    element.addEventListener("animationend", function() {
+        element.classList.remove('rotate-v')
+    });
+});

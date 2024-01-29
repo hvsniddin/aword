@@ -8,6 +8,8 @@ from .words import get_random
 def index(r):
 
     if not r.user.is_authenticated:
+        # TODO: redirect user to the demo page
+        
         return render(r, 'game/game.html')
     
     data = {}

@@ -1,7 +1,8 @@
 from django.urls import path
+
+from .api import GameAPIView
 from .views import index
 
-
 urlpatterns = [
-    path('', index, name='game')
+    path('', GameAPIView.as_view()),
 ]

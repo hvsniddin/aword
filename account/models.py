@@ -31,6 +31,13 @@ class User(AbstractUser):
     notifications = models.BooleanField(default=True)
     ads = models.BooleanField(default=True)
 
+    @property
+    def getTodaysWord(self):
+        word = self.words.filter(date=date.today())
+        if not word:
+            return None
+        return word[0]
+
 
 class Word(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='words')
