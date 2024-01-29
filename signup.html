@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/registration.css">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://kit.fontawesome.com/f8b8bea0a5.js" crossorigin="anonymous"></script>
+    <script src="scripts/registration.js" defer></script>
+
+    <link rel="stylesheet" href="styles/mouse-trail.css">
+    <script src="scripts/home-mouse-trails.js" defer></script>
+</head>
+<body>
+    
+<div class="wrapper">
+    <div class="reg-card">
+        <div class="reg-title">
+            <h1>Sign up</h1>
+            <p>Welcome!</p>
+        </div>
+        <div class="reg-main">
+            <div class="counter-container">
+                <div class="counter counting"></div>
+                  <div class="sub-counter"></div>
+                <div class="counter"></div>
+                  <div class="sub-counter"></div>
+                <div class="counter"></div>
+                  <div class="sub-counter"></div>
+                <div class="counter"></div>
+            </div>
+            <p class="error shake"></p>
+            <form action="http://127.0.0.1:8000/account/signup/" method="post" class="signup-form">
+                <div class="step-container">
+                    <div class="step step-active">
+                        <div class="step-wrapper">
+                            <div class="input-container">
+                                <div class="input">
+                                    <input type="text" name="username" placeholder=" " pattern="^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,18}$">
+                                    <span>Username</span>
+                                    <i class="fa-solid fa-spinner icn-loading"></i>
+                                </div>
+                                <div class="input">
+                                    <input type="email" name="email" placeholder=" ">
+                                    <span>E-mail</span>
+                                </div>
+                            </div>
+                            <p>Create a unique username and enter your e-mail</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-wrapper">
+                            <div class="input-container">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                                <input type="number" name="codeInput" maxlength="1" onkeydown="moveFocus(event, this)">
+                            </div>
+                            <p>Enter the confirmation code we've sent you via the e-mail you provided</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-wrapper">
+                            <div class="input-container">
+                                <div class="input">
+                                    <input type="password" name="password1" pattern="^(?=.*\d).{8,}$" title="At least 8 characters long and must contain numbers" placeholder=" ">
+                                    <span>Password</span>
+                                </div>
+                                <div class="input">
+                                    <input type="password" name="password2" pattern="^(?=.*\d).{8,}$" title="At least 8 characters long and must contain numbers" placeholder=" ">
+                                    <span>Confirm password</span>
+                                </div>
+                            </div>
+                            <p>Now create a strong, reliable password</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-wrapper">
+                            <div class="g-recaptcha"
+                                data-theme="dark"
+                                data-size="compact"
+                                data-callback="recaptchaSuccess" 
+                                data-expired-callback="recaptchaExpired"
+                                data-sitekey="6LdYwhQoAAAAAHnL1LrEbKL9Pbxp0-fZo1jQCiIZ"></div>
+                            <p>Almsot there. Prove that you are not a robot</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stepper-container">
+                    <i class="fa-solid fa-chevron-left stepper"></i>
+                    <button type="submit" class="disabled">Submit</button>
+                    <i class="fa-solid fa-chevron-right stepper"></i>
+                </div>
+            </form>
+        </div>
+        <div class="reg-extra">
+            <p>Already a user? <a href="login.html">Log in</a></p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

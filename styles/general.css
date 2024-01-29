@@ -1,0 +1,46 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --background: #121212;
+    --surface: #1e1e1e;
+    --primary: #bb86fc;
+    --secondary: #03dac6;
+    --on-background: #dedede;
+    --on-surface: #e1e1e1;
+    --on-primary: #000000;
+    --on-secondary: #000000;
+
+    --reg-btn-bg: linear-gradient(to right bottom, var(--primary), var(--secondary))
+}
+
+
+body {
+    font-family: system-ui, 'Roboto', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    color: var(--on-surface);
+    overflow: hidden;
+}
+
+button {
+    transition: transform 300ms;
+}
+
+a {
+    color: var(--primary);
+}
+
+button:hover,
+button:focus {
+    transform: translateY(-2px);
+}
+button:active {
+    transform: translateY(0)
+}
