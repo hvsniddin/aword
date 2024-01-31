@@ -47,10 +47,16 @@ class GameAPIView(APIView):
             case 'tryletter':
                 word = user.getTodaysWord
                 l = r.GET.get('l').lower()
-                data = {"detail":"Wrong attempt"}
+                print(word.letters)
                 if l in word.letters:
                     data = {'detail': 'This letter has already been found'}
-                elif l in word.text:
+                elif l in word.wrong_attempts:
+                    data = {'detail': 'This letter has already been tried'}
+                elif l not in word.text:
+                    data = {"detail":"Wrong attempt"}
+                    word.wrong_attempts.append(l)
+                    word.save()
+                else:
                     word.letters.append(l)
                     word.save()
                     data = index_list(word.text, [l])
