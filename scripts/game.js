@@ -78,6 +78,18 @@ window.addEventListener("keyup", async (e) => {
     if (e.key === "Backspace") {
         clear();
     } else if (e.key === 'Enter') {
+        confetti({
+            particleCount: 70,
+            spread: 70,
+            origin: { y: .6, x:0},
+            angle: 45,
+        });
+        confetti({
+            particleCount: 70,
+            spread: 70,
+            origin: { y: .6 , x:1},
+            angle: 135,
+        });
         enter();
     }
 });
@@ -162,6 +174,7 @@ async function enter() {
     enterKey.classList.add('press');
     if (getSelectedButton()) {
         const tryData = await tryLetter(getSelectedButton().dataset.letter);
+        console.log(tryData)
         deselectButtons();
         if (tryData['detail']) {
             showerror(tryData['detail']);

@@ -46,26 +46,31 @@ body {
     flex-direction: column;
     gap: .5rem;
 }
-.buttons button {
-    position: relative;
+.buttons a {
     height: 2.8rem;
+    /* width: 100%; */
+
+    display: grid;
+    place-items: center;
+    position: relative;
+
     background-color: transparent;
     color: var(--on-background);
+
     font-weight: bolder;
     font-size: large;
+    text-decoration: none;
+
     border: none;
     border-radius: 5px;
+    outline: none;
 }
-.buttons button:hover,
-.buttons button:focus {
-  transform: none;
-}
-.buttons button:hover {
+.buttons a:focus {
   color: var(--primary);
 }
 
-.buttons button:hover::before,
-.buttons button:hover::after {
+.buttons a:focus::before,
+.buttons a:focus::after {
   content: "";
   position: absolute;
   height: 1px;
@@ -74,12 +79,9 @@ body {
   right: 0;
   top: 0;
 }
-.buttons button:hover::after {
+.buttons a:focus::after {
   top: unset;
   bottom: 0;
-}
-.buttons button:active {
-  transform: none;
 }
 
 .links {

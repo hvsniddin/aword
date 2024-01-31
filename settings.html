@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aword - Settings</title>
+
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/settings.css">
+
+    <script src="https://kit.fontawesome.com/f8b8bea0a5.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="menu">
+            <a href="#">
+                <span class="fa-solid fa-user"></span>
+                <span>Profile</span>
+            </a>
+            <div class="notavailable">
+                <a href="#">
+                    <span class="fa-solid fa-pen-to-square"></span>
+                    <span>Themes</span>
+                </a>
+            </div>
+            <div class="notavailable">
+                <a href="#">
+                    <span class="fa-solid fa-gear"></span>
+                    <span>Home settings</span>
+                </a>
+            </div>
+            <div class="notavailable">
+                <a href="#">
+                    <span class="fa-solid fa-key"></span>
+                    <span>Password</span>
+                </a>
+            </div>
+        </div>
+        <div class="section">
+            <!-- COVER WITH A FORM!!!!! -->
+            <form novalidate action="">
+                <div class="setting">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username">
+                </div>
+                <div class="setting">
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <div class="setting">
+                    <label for="language">Language</label>
+                    <select name="language" id="language">
+                        <option value="uz">Uzbek</option>
+                        <option value="ru">Russian</option>
+                        <option value="en" selected="selected">English</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <label for="timezone">Country</label>
+                    <select name="country" id="country">
+                        <option value="uz">Uzbekistan</option>
+                        <option value="ru">Russia</option>
+                        <option value="us">USA</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <label for="timezone">Timezone</label>
+                    <select name="timezone" id="timezone">
+                        <option value="Asia/Tashkent">(UTC +05:00) Asia/Tashkent</option>
+                    </select>
+                </div>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

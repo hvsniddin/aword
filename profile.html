@@ -7,13 +7,14 @@
 
     <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/profile.css">
+    
     <script src="https://kit.fontawesome.com/f8b8bea0a5.js" crossorigin="anonymous"></script>
-
+    <script src="scripts/profile.js" defer></script>
 
     <!--- MOUSE TRAIL -->
-    <link rel="stylesheet" href="styles/mouse-trail.css">
+    <!-- <link rel="stylesheet" href="styles/mouse-trail.css">
     <script src="https://kit.fontawesome.com/f8b8bea0a5.js" crossorigin="anonymous"></script>
-    <script src="scripts/home-mouse-trails.js" defer></script>
+    <script src="scripts/home-mouse-trails.js" defer></script> -->
 </head>
 <body>
     <div class="wrapper">
@@ -27,13 +28,26 @@
                     <p class="value">100</p>
                 </div>
                 <div class="info">
+                    <p class="title">Words played:</p>
+                    <p class="value">7</p>
+                </div>
+                <div class="info">
                     <p class="title">Win rate:</p>
                     <p class="value">75%</p>
                 </div>
+                <div class="info">
+                    <p class="title">Average attempt:</p>
+                    <p class="value">15</p>
+                </div>
             </div>
         </div>
-        <div class="leaderboard">
-            <div class="history">
+        <div class="main-stats">
+            <div class="tabs">
+                <div data-selected="true" data-index="0">History</div>
+                <div data-selected="false" data-index="1">Achievements</div>
+                <div data-selected="false" data-index="2">Leaderboard</div>
+            </div>
+            <div class="history field">
                 <table>
                     <thead>
                         <tr>
@@ -46,42 +60,52 @@
                     <tbody>
                         <tr>
                             <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
-                            <td>11</td>
+                            <td>26.01.2024</td>
+                            <td>13</td>
                             <td>TRUE</td>
                         </tr>
                         <tr>
-                            <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
+                            <td>VIOLATE</td>
+                            <td>25.01.2024</td>
                             <td>11</td>
+                            <td>FALSE</td>
+                        </tr>
+                        <tr>
+                            <td>HEADQUARTERS</td>
+                            <td>24.01.2024</td>
+                            <td>17</td>
                             <td>TRUE</td>
                         </tr>
                         <tr>
-                            <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
-                            <td>11</td>
+                            <td>ELEVATE</td>
+                            <td>23.01.2024</td>
+                            <td>6</td>
                             <td>TRUE</td>
                         </tr>
                         <tr>
-                            <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
-                            <td>11</td>
+                            <td>PIERCE</td>
+                            <td>22.01.2024</td>
+                            <td>10</td>
                             <td>TRUE</td>
                         </tr>
                         <tr>
-                            <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
-                            <td>11</td>
-                            <td>TRUE</td>
-                        </tr>
-                        <tr>
-                            <td>OBSTACLE</td>
-                            <td>26-01-2024</td>
-                            <td>11</td>
-                            <td>TRUE</td>
+                            <td>RANDOM</td>
+                            <td>21.01.2024</td>
+                            <td>3</td>
+                            <td>FALSE</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="achievements field notavailabel">
+                <div class="field-wrapper">
+                    Yet to come. . .
+                </div>
+            </div>
+            <div class="leaderboard field notavailabel">
+                <div class="field-wrapper">
+                    Yet to come. . .
+                </div>
             </div>
         </div>
     </div>

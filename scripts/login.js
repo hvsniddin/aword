@@ -14,6 +14,7 @@ form.addEventListener('submit', async (e) => {
         formData
     )
     if (data["detail"]) {
+        console.log(data['detail']);
         errorText.textContent = "Username or password incorrect";
         return;
     }
