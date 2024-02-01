@@ -19,9 +19,13 @@ form.addEventListener('submit', async (e) => {
         return;
     }
 
-    document.cookie = '';
-    document.cookie = `access=${data["access"]}; path=/`;
-    document.cookie = `refresh=${data["refresh"]}; path=/`;
+    
+    // document.cookie = '';
+    // document.cookie = `access=${data["access"]}; path=/`;
+    // document.cookie = `refresh=${data["refresh"]}; path=/`;
+
+    setCookie('access', data["access"], 1)
+    setCookie('refresh', data["refresh"], 7)
 
     window.location.replace("http://127.0.0.1:5500/front/home.html");
 });
@@ -32,4 +36,11 @@ async function requestFD(url, method, body) {
     const response = await fetch(url, {method:method, body:body})
     data = await response.json()
     return data
+}
+
+function setCookie(name, value, days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    var expires = "expires="+ date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
