@@ -1,3 +1,4 @@
+from datetime import date, datetime
 import random
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -6,6 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from .serializers import UserSerializer
 
 from .models import User
 
@@ -77,3 +80,10 @@ def check_availibility(r):
         available = not User.objects.filter(email=email).exists()
 
     return Response({'ok':available})
+
+class UserAPIView(APIView):
+    def get(self, r):
+        serializer = UserSerializer(r.user)
+        print(date.today()==r.user.getTodaysWord.date)
+        print(date.today(), r.user.getTodaysWord.date)
+        return Response(serializer.data)

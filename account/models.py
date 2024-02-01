@@ -20,7 +20,6 @@ class User(AbstractUser):
     timezone = models.CharField(max_length=50, choices=[(tz, tz) for tz in pytz.all_timezones], default="UTC")
     pfp = models.ImageField(upload_to='pics/pfp', default='placeholder.png')
     balance = models.IntegerField(default=0)
-    is_finished = models.BooleanField(default=False)
 
     # Privacy
     show_profile = models.BooleanField(default=True)
@@ -44,15 +43,19 @@ class Word(models.Model):
     text = models.CharField(max_length=15)
     date = models.DateField(default=date.today)
 
-    letters = ArrayField(models.CharField(max_length=1), default=list)
+    correct_attempts = ArrayField(models.CharField(max_length=1), default=list)
     wrong_attempts = ArrayField(models.CharField(max_length=1), default=list)
 
     @property
     def found(self):
         for i in self.text:
-            if i not in self.letters:
+            if i not in self.correct_attempts:
                 return False
         return True
+    
+    @property
+    def started(self):
+        return self.date is not None and bool(self.correct_attempts or self.wrong_attempts)
     
 
     def save(self, *args, **kwargs):

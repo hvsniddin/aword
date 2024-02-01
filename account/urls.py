@@ -1,6 +1,6 @@
 from django.urls import path
 # from .views import profile, register, login, logout, change, delete
-from .api import signup, request_otp, verify_otp, check_availibility
+from .api import UserAPIView, signup, request_otp, verify_otp, check_availibility
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -11,4 +11,6 @@ urlpatterns = [
 
     path('login/', TokenObtainPairView.as_view()),
     path('refresh/', TokenRefreshView.as_view()),
+
+    path('me/', UserAPIView.as_view()),
 ]

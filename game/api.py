@@ -29,17 +29,17 @@ class GameAPIView(APIView):
                 else: data=len(word.text)
             case 'progress':
                 word = user.getTodaysWord
-                letters = index_list(word.text, word.letters)
+                letters = index_list(word.text, word.correct_attempts)
                 data = {"found":letters, "attempts":word.wrong_attempts}
             case 'buyletter':
                 print('buying letter')
                 word = user.getTodaysWord
                 l_ind = int(r.GET.get('i'))
-                if word.text[l_ind] in word.letters:
+                if word.text[l_ind] in word.correct_attempts:
                     data = {"detail":"This letter has already been found"}
                     return Response(data=data)
                 
-                word.letters.append(word.text[l_ind])
+                word.correct_attempts.append(word.text[l_ind])
                 print('saving')
                 word.save()
                 print('saved')
@@ -47,8 +47,8 @@ class GameAPIView(APIView):
             case 'tryletter':
                 word = user.getTodaysWord
                 l = r.GET.get('l').lower()
-                print(word.letters)
-                if l in word.letters:
+                print(word.correct_attempts)
+                if l in word.correct_attempts:
                     data = {'detail': 'This letter has already been found'}
                 elif l in word.wrong_attempts:
                     data = {'detail': 'This letter has already been tried'}
@@ -57,7 +57,7 @@ class GameAPIView(APIView):
                     word.wrong_attempts.append(l)
                     word.save()
                 else:
-                    word.letters.append(l)
+                    word.correct_attempts.append(l)
                     word.save()
                     data = index_list(word.text, [l])
 

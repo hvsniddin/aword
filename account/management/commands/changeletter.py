@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
         user = User.objects.get(username=username)
         word = Word.objects.filter(user=user, date=date.today()).first()
-        letters = word.letters
+        letters = word.correct_attempts
 
         if letter and len(letter)>1:
             for i in letter:
