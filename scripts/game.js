@@ -20,7 +20,8 @@ load().then(() => {
         if (e.dataset.found==='true') return
         e.addEventListener("click", async () => {
             const buyLetterData = await request(`http://127.0.0.1:8000/game/?for=buyletter&i=${i}`, 'GET', {"Authorization": `Bearer ${getCookie("access")}`});
-            loadProgress(buyLetterData, letters)
+            loadProgress(buyLetterData['letters'], letters)
+            buyLetterData['found'] && fireConfetti();
         });
     });
 });
@@ -69,30 +70,7 @@ async function load() {
     }
 }
 
-window.addEventListener("keyup", async (e) => {
-    const key = e.key;
-    if (e.code.startsWith("Key")) {
-        selectButton(key);
-    }
-
-    if (e.key === "Backspace") {
-        clear();
-    } else if (e.key === 'Enter') {
-        confetti({
-            particleCount: 70,
-            spread: 70,
-            origin: { y: .6, x:0},
-            angle: 45,
-        });
-        confetti({
-            particleCount: 70,
-            spread: 70,
-            origin: { y: .6 , x:1},
-            angle: 135,
-        });
-        enter();
-    }
-});
+window.addEventListener("keyup", (e) => handleKeyPress(e));
 
 async function request(url, method, headers, body) {
     const response = await fetch(url, {method:method, headers:headers, body:JSON.stringify(body)})
@@ -174,14 +152,14 @@ async function enter() {
     enterKey.classList.add('press');
     if (getSelectedButton()) {
         const tryData = await tryLetter(getSelectedButton().dataset.letter);
-        console.log(tryData)
         deselectButtons();
         if (tryData['detail']) {
             showerror(tryData['detail']);
             return;
         }
         const letterElems = document.querySelectorAll('.letter');
-        loadProgress(tryData, letterElems);
+        loadProgress(tryData['letters'], letterElems);
+        tryData['found'] && fireConfetti();
     }
 }
 
@@ -197,4 +175,33 @@ function showerror(e) {
     error.style.animationPlayState = 'running';
     error.innerText = e;
     error.classList.add('showerror');
+}
+
+function fireConfetti() {
+    confetti({
+        particleCount: 70,
+        spread: 70,
+        origin: { y: .6, x:0},
+        angle: 45,
+    });
+    confetti({
+        particleCount: 70,
+        spread: 70,
+        origin: { y: .6 , x:1},
+        angle: 135,
+    });
+}
+
+async function handleKeyPress(e) {
+    const key = e.key;
+    if (e.code.startsWith("Key")) {
+        selectButton(key);
+    }
+
+    if (e.key === "Backspace") {
+        clear();
+    } else if (e.key === 'Enter') {
+
+        enter();
+    }
 }

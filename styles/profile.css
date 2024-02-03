@@ -174,3 +174,10 @@ tbody tr:nth-of-type(even) {
 /* tbody tr {
     background-color: aliceblue;
 } */
+
+.fa-check {
+    color: green;
+}
+.fa-xmark {
+    color: red;
+}

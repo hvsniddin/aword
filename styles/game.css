@@ -45,9 +45,6 @@
     perspective: 400px;
 }
 
-/* .letter-container:hover > .letter {
-    transform: rotateY(180deg);
-} */
 .letter-front,
 .letter-back {
     position: absolute;

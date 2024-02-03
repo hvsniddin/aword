@@ -71,13 +71,19 @@ function loadTable(words) {
         const celltext = document.createElement('td');
         const celldate = document.createElement('td');
         const cellattempts = document.createElement('td');
+        const cellbought = document.createElement('td');
+        const cellprofit = document.createElement('td');
         const cellfound = document.createElement('td');
-        row.append(celltext, celldate, cellattempts, cellfound);
+        row.append(celltext, celldate, cellattempts, cellbought, cellprofit, cellfound);
 
         celltext.textContent = word['text'].toUpperCase();
         celldate.textContent = reformatDate(word['date']);
         cellattempts.textContent = word['correct_attempts'].length + word['wrong_attempts'].length;
-        cellfound.textContent = word['found'];
+        cellbought.textContent = word['bought'].length
+        cellprofit.textContent = word['profit']>0 ? '+'+word['profit'] : word['profit'];
+        const foundIcon = document.createElement('i');
+        word['found'] ? foundIcon.className='fa-solid fa-check' : foundIcon.className='fa-solid fa-xmark';
+        cellfound.appendChild(foundIcon);
         tableBody.appendChild(row);
     }
 }
@@ -101,7 +107,7 @@ async function main() {
     const nodata = document.querySelector('.nodata');
     const table = document.querySelector('.history table');
 
-    user = await request('http://127.0.0.1:8000/account/me/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
+    user = await request('http://127.0.0.1:8000/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
 
     if (user['words']) {
         nodata.style.display = 'none';

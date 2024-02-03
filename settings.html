@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="styles/settings.css">
 
     <script src="https://kit.fontawesome.com/f8b8bea0a5.js" crossorigin="anonymous"></script>
+    <script src="scripts/settings.js" defer></script>
 
 </head>
 <body>
     <div class="wrapper">
+        <div class="change-info">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p></p>
+        </div>
         <div class="menu">
             <a href="#">
                 <span class="fa-solid fa-user"></span>
@@ -20,7 +25,7 @@
             </a>
             <div class="notavailable">
                 <a href="#">
-                    <span class="fa-solid fa-pen-to-square"></span>
+                    <span class="fa-solid fa-palette"></span>
                     <span>Themes</span>
                 </a>
             </div>
@@ -39,14 +44,16 @@
         </div>
         <div class="section">
             <!-- COVER WITH A FORM!!!!! -->
-            <form novalidate action="">
+            <form novalidate action="" class="change-profile-form">
                 <div class="setting">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username">
+                    <input class="idle" type="text" name="username" id="username" pattern="^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,18}$">
+                    <p class="input-change-activate">Change</p>
                 </div>
                 <div class="setting">
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email">
+                    <input class="idle" type="email" name="email" id="email">
+                    <p class="input-change-activate">Change</p>
                 </div>
                 <div class="setting">
                     <label for="language">Language</label>
@@ -55,6 +62,7 @@
                         <option value="ru">Russian</option>
                         <option value="en" selected="selected">English</option>
                     </select>
+                    <p class="fake-change-activate">Change</p>
                 </div>
                 <div class="setting">
                     <label for="timezone">Country</label>
@@ -63,14 +71,16 @@
                         <option value="ru">Russia</option>
                         <option value="us">USA</option>
                     </select>
+                    <p class="fake-change-activate">Change</p>
                 </div>
                 <div class="setting">
                     <label for="timezone">Timezone</label>
                     <select name="timezone" id="timezone">
                         <option value="Asia/Tashkent">(UTC +05:00) Asia/Tashkent</option>
                     </select>
+                    <p class="fake-change-activate">Change</p>
                 </div>
-
+                
                 <button type="submit">Save</button>
             </form>
         </div>

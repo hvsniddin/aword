@@ -61,6 +61,7 @@
 
 .setting {
     width: 70%;
+    max-width: 900px;
     height: 2rem;
 
     display: flex;
@@ -70,10 +71,9 @@
 
 .setting input,
 .setting select {
-    width: 65%;
+    width: 50%;
     max-width: 400px;
     
-
     padding: 0 .5rem;
 
     font-size: 1em;
@@ -86,12 +86,34 @@
     border-radius: 3px;
     outline: none;
 }
+.idle,
+.setting:has(.idle) label {
+    /* background-color: transparent !important; */
+    pointer-events: none;
+}
+.idle {
+    background-color: transparent !important;
+}
+
 .setting input:focus {
     border: 1px solid var(--on-surface);
 }
 .setting label {
     display: flex;
     align-items: center;
+    margin-right: auto;
+}
+.setting p {
+    width: 1px;
+    display: flex;
+    align-items: center;
+    
+    padding: 0 1rem;
+
+    color: var(--primary);
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
 }
 
 form button {
@@ -106,11 +128,46 @@ form button {
 }
 
 
+.change-info {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
+    padding: 1rem;
+
+    right: 1rem;
+
+    border-radius: 5px;
+
+    transform: translateX(calc(100% + 1rem));
+    /* transition: transform 250ms linear; */
+}
+
+.fake-change-activate {
+    visibility: hidden;
+}
 .notavailable {
     cursor: not-allowed;
 }
 .notavailable a {
     pointer-events: none;
     user-select: none;
+}
+
+@keyframes showerror {
+    5% {
+        transform: translateX(0);
+    }
+    
+    95% {
+
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(100% + 1rem));
+    }
+}
+.showerror {
+    animation: showerror 5s linear;
 }

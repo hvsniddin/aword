@@ -126,8 +126,6 @@ steppers.forEach((e, i) => {
                 case 1:
                     // TODO: Send otp email
                     
-
-
                     if (emailConfirmed) break; 
                     codeInputs.forEach(e => {
                         e.classList.add('shake');
