@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from datetime import timedelta
 import environ
@@ -41,8 +42,8 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-CORS_ALLOWED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500']
-CSRF_TRUSTED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500']
+CORS_ALLOWED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:8001']
+CSRF_TRUSTED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:8001']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -95,14 +96,13 @@ AUTH_USER_MODEL = 'account.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        'NAME': os.environ.get("POSTGRES_DB", 'postgres'),
+        'USER': os.environ.get("POSTGRES_DB", 'postgres'),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", 'postgres'),
+        'HOST': os.environ.get("POSTGRES_HOST", 'db'),
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
