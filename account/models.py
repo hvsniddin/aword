@@ -45,18 +45,30 @@ class Word(models.Model):
 
     correct_attempts = ArrayField(models.CharField(max_length=1), default=list)
     wrong_attempts = ArrayField(models.CharField(max_length=1), default=list)
+    bought = ArrayField(models.CharField(max_length=1), default=list)
 
     @property
     def found(self):
+        letters = self.correct_attempts+self.bought
         for i in self.text:
-            if i not in self.correct_attempts:
+            if i not in letters:
                 return False
         return True
     
     @property
     def started(self):
-        return self.date is not None and bool(self.correct_attempts or self.wrong_attempts)
-    
+        return self.date is not None and bool(self.correct_attempts or self.wrong_attempts or self.bought)
+
+    @property
+    def profit(self):
+        profit = 0
+        for i in self.correct_attempts:
+            profit += self.text.count(i)
+        profit = profit+len(self.text) if self.found else profit+0
+        profit -= len(self.wrong_attempts)
+        profit -= len(self.bought)
+
+        return profit
 
     def save(self, *args, **kwargs):
         if '-' in self.text and '-' not in self.letters:

@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from enum import Flag
 import random
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -12,7 +13,7 @@ from .serializers import UserSerializer
 
 from .models import User
 
-from .forms import SignupForm
+from .forms import ChangeProfileForm, SignupForm
 
 @api_view(['POST'])
 @authentication_classes([])
@@ -84,6 +85,24 @@ def check_availibility(r):
 class UserAPIView(APIView):
     def get(self, r):
         serializer = UserSerializer(r.user)
-        print(date.today()==r.user.getTodaysWord.date)
-        print(date.today(), r.user.getTodaysWord.date)
         return Response(serializer.data)
+    
+    def patch(self, r):
+        form = ChangeProfileForm(r.data, instance=r.user)
+        data = {}
+
+        if not form.changed_data:
+            data['ok'] = True
+            data['changed'] = []
+        elif form.is_valid():
+            print(form.changed_data)
+            changed_user = form.instance
+            changed_user.save(update_fields=form.changed_data)
+            data['ok'] = True
+            data['changed'] = form.changed_data
+            print(data)
+        else:
+            data['ok'] = False
+            data['errors'] = form.errors
+
+        return Response(data=data)

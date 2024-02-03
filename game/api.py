@@ -29,37 +29,52 @@ class GameAPIView(APIView):
                 else: data=len(word.text)
             case 'progress':
                 word = user.getTodaysWord
-                letters = index_list(word.text, word.correct_attempts)
+                letters = index_list(word.text, list(set(word.correct_attempts+word.bought)))
                 data = {"found":letters, "attempts":word.wrong_attempts}
             case 'buyletter':
-                print('buying letter')
                 word = user.getTodaysWord
+                found_letters = word.correct_attempts+word.bought
+                if word.found:
+                    data = {"detail":"The word has already been found"}
+                    return Response()
                 l_ind = int(r.GET.get('i'))
-                if word.text[l_ind] in word.correct_attempts:
+                if word.text[l_ind] in found_letters:
                     data = {"detail":"This letter has already been found"}
                     return Response(data=data)
                 
-                word.correct_attempts.append(word.text[l_ind])
-                print('saving')
+                if user.balance-word.text.count(word.text[l_ind])>=0: 
+                    user.balance-=word.text.count(word.text[l_ind])
+                for i in range(word.text.count(word.text[l_ind])):
+                    word.bought.append(word.text[l_ind])
                 word.save()
-                print('saved')
-                data = index_list(word.text, list(word.text[l_ind]))
+                if word.found:
+                    user.balance+=len(word.text)
+                user.save()
+                data = {'letters':index_list(word.text, list(word.text[l_ind])), 'found':word.found}
             case 'tryletter':
                 word = user.getTodaysWord
+                if word.found:
+                    data = {'detail':'The word has already been found'}
+                    return Response(data=data)
                 l = r.GET.get('l').lower()
-                print(word.correct_attempts)
                 if l in word.correct_attempts:
                     data = {'detail': 'This letter has already been found'}
                 elif l in word.wrong_attempts:
                     data = {'detail': 'This letter has already been tried'}
                 elif l not in word.text:
+                    user.balance-=1
+                    user.save()
                     data = {"detail":"Wrong attempt"}
                     word.wrong_attempts.append(l)
                     word.save()
                 else:
+                    user.balance+=word.text.count(l)
                     word.correct_attempts.append(l)
                     word.save()
-                    data = index_list(word.text, [l])
+                    if word.found:
+                        user.balance+=len(word.text)
+                    user.save()
+                    data = {'letters':index_list(word.text, [l]),'found':word.found}
 
         return Response(data=data)
 

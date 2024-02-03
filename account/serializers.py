@@ -12,7 +12,7 @@ User = get_user_model()
 class WordSerializer(ModelSerializer):
     class Meta:
         model = Word
-        fields = ['id', 'text', 'date', 'correct_attempts', 'wrong_attempts', 'found', 'started']
+        fields = ['id', 'text', 'date', 'correct_attempts', 'wrong_attempts', 'bought', 'found', 'started', 'profit']
 
 class UserSerializer(ModelSerializer):
     words = SerializerMethodField()

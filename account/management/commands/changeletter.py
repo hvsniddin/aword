@@ -24,6 +24,8 @@ class Command(BaseCommand):
         user = User.objects.get(username=username)
         word = Word.objects.filter(user=user, date=date.today()).first()
         letters = word.correct_attempts
+        attempts = word.wrong_attempts
+        bought = word.bought
 
         if letter and len(letter)>1:
             for i in letter:
@@ -34,7 +36,11 @@ class Command(BaseCommand):
             return
         
         if not letter and remove:
+            user.balance = user.balance - word.profit
+            user.save()
             letters.clear()
+            attempts.clear()
+            bought.clear()
             word.save()
             print('Cleared')
         elif not letter and not remove:
