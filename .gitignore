@@ -2,3 +2,4 @@
 venv
 .venv
 data/
+compose.yml
