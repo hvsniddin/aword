@@ -42,8 +42,8 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-CORS_ALLOWED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:8001']
-CSRF_TRUSTED_ORIGINS = ['http://192.168.248.229:5500', 'http://169.254.161.203:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:8001']
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5500', 'http://127.0.0.1:8001', 'https://aword-i38p.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:5500', 'http://127.0.0.1:8001', 'https://aword-i38p.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -96,10 +96,10 @@ AUTH_USER_MODEL = 'account.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("POSTGRES_DB", 'postgres'),
-        'USER': os.environ.get("POSTGRES_DB", 'postgres'),
-        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", 'postgres'),
-        'HOST': os.environ.get("POSTGRES_HOST", 'db'),
+        'NAME': os.environ.get("POSTGRES_DB"),
+        'USER': os.environ.get("POSTGRES_USER"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
+        'HOST': os.environ.get("POSTGRES_HOST"),
         'PORT': '5432',
     }
 }
