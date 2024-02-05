@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
+  back:
+    container_name: aword-back
+    build: .
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./config:/back
+    ports:
+      - 8000:8000
+
+  front:
+    container_name: aword-front
+    build: .
+    depends_on:
+      - back
+    volumes:
+      - ./front:/front
+    ports:
+      - 8001:8001

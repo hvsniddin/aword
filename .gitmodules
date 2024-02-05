@@ -1,0 +1,8 @@
+[submodule "config"]
+	path = config
+	url = https://github.com/hvsniddin/aword
+	branch = back
+[submodule "front"]
+	path = front
+	url = https://github.com/hvsniddin/aword
+	branch = front
