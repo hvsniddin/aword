@@ -13,6 +13,3 @@ pfp/
 __pycache__
 /env
 *.env
-
-Dockerfile
-entrypoint.sh
