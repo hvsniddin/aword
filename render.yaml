@@ -5,7 +5,7 @@ services:
     runtime: docker
     region: oregon # optional (defaults to oregon)
     plan: free # optional (defaults to starter instance type)
-    rootDir: back
+    rootDir: /
     # numInstances: 3 # optional (defaults to 1)
     # healthCheckPath: /
     # registryCredential: # optional (defaults to no credential)
