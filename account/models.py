@@ -39,21 +39,21 @@ class User(AbstractUser):
     
     @property
     def plays(self):
-        return self.words.filter(started=True)
+        return [word for word in self.words.all() if word.started]
         
     
     @property
     def wins(self):
-        return self.plays.filter(found=True)
+        return [word for word in self.words.all() if word.started and word.found]
 
 
     @property
     def avg_attempts(self):
         r=0
-        for i in self.wors:
+        for i in self.words:
             if i.found:
                 r+=len(i.correct_attempts)+len(i.wrong_attempts)
-        return r/len(self.wins)
+        return r/len(self.wins) if self.wins else 0
     
     @property
     def winrate(self):
