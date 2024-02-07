@@ -36,6 +36,28 @@ class User(AbstractUser):
         if not word:
             return None
         return word[0]
+    
+    @property
+    def plays(self):
+        return self.words.filter(started=True)
+        
+    
+    @property
+    def wins(self):
+        return self.plays.filter(found=True)
+
+
+    @property
+    def avg_attempts(self):
+        r=0
+        for i in self.wors:
+            if i.found:
+                r+=len(i.correct_attempts)+len(i.wrong_attempts)
+        return r/len(self.wins)
+    
+    @property
+    def winrate(self):
+        return round(len(self.wins)*100/len(self.plays))
 
 
 class Word(models.Model):
