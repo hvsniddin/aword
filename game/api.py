@@ -42,8 +42,7 @@ class GameAPIView(APIView):
                     data = {"detail":"This letter has already been found"}
                     return Response(data=data)
                 
-                if user.balance-word.text.count(word.text[l_ind])>=0: 
-                    user.balance-=word.text.count(word.text[l_ind])
+                user.balance-=word.text.count(word.text[l_ind])
                 for i in range(word.text.count(word.text[l_ind])):
                     word.bought.append(word.text[l_ind])
                 word.save()
@@ -57,7 +56,7 @@ class GameAPIView(APIView):
                     data = {'detail':'The word has already been found'}
                     return Response(data=data)
                 l = r.GET.get('l').lower()
-                if l in word.correct_attempts:
+                if l in word.correct_attempts or l in word.bought:
                     data = {'detail': 'This letter has already been found'}
                 elif l in word.wrong_attempts:
                     data = {'detail': 'This letter has already been tried'}
@@ -77,11 +76,6 @@ class GameAPIView(APIView):
                     data = {'letters':index_list(word.text, [l]),'found':word.found}
 
         return Response(data=data)
-
-
-
-
-
 
 
 class WordListCreateAPIView(generics.ListCreateAPIView):

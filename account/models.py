@@ -36,28 +36,6 @@ class User(AbstractUser):
         if not word:
             return None
         return word[0]
-    
-    @property
-    def plays(self):
-        return [word for word in self.words.all() if word.started]
-        
-    
-    @property
-    def wins(self):
-        return [word for word in self.words.all() if word.started and word.found]
-
-
-    @property
-    def avg_attempts(self):
-        r=0
-        for i in self.words:
-            if i.found:
-                r+=len(i.correct_attempts)+len(i.wrong_attempts)
-        return r/len(self.wins) if self.wins else 0
-    
-    @property
-    def winrate(self):
-        return round(len(self.wins)*100/len(self.plays))
 
 
 class Word(models.Model):
@@ -80,6 +58,10 @@ class Word(models.Model):
     @property
     def started(self):
         return self.date is not None and bool(self.correct_attempts or self.wrong_attempts or self.bought)
+
+    @property
+    def attempts(self):
+        return len(self.correct_attempts)+len(self.wrong_attempts)
 
     @property
     def profit(self):

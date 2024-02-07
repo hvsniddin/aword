@@ -12,13 +12,13 @@ User = get_user_model()
 class WordSerializer(ModelSerializer):
     class Meta:
         model = Word
-        fields = ['id', 'text', 'date', 'correct_attempts', 'wrong_attempts', 'bought', 'found', 'started', 'profit']
+        fields = ['id', 'text', 'date', 'correct_attempts', 'wrong_attempts', 'bought', 'found', 'attempts', 'started', 'profit']
 
 class UserSerializer(ModelSerializer):
     words = SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'timezone', 'balance', 'words', 'plays', 'wins', 'avg_attempts', 'winrate']
+        fields = ['id', 'username', 'email', 'timezone', 'balance', 'words']
 
     def get_words(self, obj):
         words = Word.objects.filter(user=obj).order_by('-date')
