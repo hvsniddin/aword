@@ -40,12 +40,12 @@ menuButtons.forEach((e, i) => {
                 emptyObserver.disconnect();
                 if (!getCookie("access")) {
                     setTimeout(() => {
-                        window.location.href = '/front/login.html';
+                        window.location.href = 'login.html';
                     }, 200);
                     return
                 }
                 setTimeout(() => {
-                    window.location.href = `/front/${href}`;
+                    window.location.href = `${href}`;
                 }, 200);
             }
         });

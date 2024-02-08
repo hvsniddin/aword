@@ -4,7 +4,7 @@ const emailInput = document.querySelector('input[name="email"]');
 
 // LOAD DATA
 async function main() {
-    user = await request('http://127.0.0.1:8000/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
+    user = await request('https://aword-api.onrender.com/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
     usernameInput.value = user['username'];
     emailInput.value = user['email'];
 }
@@ -20,7 +20,7 @@ async function request(url, method, headers, body) {
         console.log(data);
         // Invalid ACCESS token
         if (data['code']==='token_not_valid' && data['messages'] && data['messages'][0]['token_type']==='access') {
-            const refreshData = await request('http://127.0.0.1:8000/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
+            const refreshData = await request('https://aword-api.onrender.com/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
             setCookie('access', refreshData['access'], 1);
         }
     }
@@ -49,7 +49,7 @@ document.querySelectorAll('.input-change-activate').forEach((e) => {
             e.textContent = 'Cancel';
             input.focus();
         } else {
-            user = await request('http://127.0.0.1:8000/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
+            user = await request('https://aword-api.onrender.com/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
             input.classList.add('idle');
             input.value = user[`${input.getAttribute('name')}`];
             e.textContent = 'Change';
@@ -64,7 +64,7 @@ form.addEventListener('submit', async (e) => {
     let formData = new FormData(form);
     formData = clearFormData(formData)
     
-    const data = await requestFD('http://127.0.0.1:8000/account/', 'PATCH', formData, headers={"Authorization":`Bearer ${getCookie('access')}`});
+    const data = await requestFD('https://aword-api.onrender.com/account/', 'PATCH', formData, headers={"Authorization":`Bearer ${getCookie('access')}`});
     if (data['ok']) {
         if (data['changed'].length===0) {
             reloadInputFields();

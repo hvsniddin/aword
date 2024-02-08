@@ -19,7 +19,7 @@ load().then(() => {
     letters.forEach((e, i) => {
         if (e.dataset.found==='true') return
         e.addEventListener("click", async () => {
-            const buyLetterData = await request(`http://127.0.0.1:8000/game/?for=buyletter&i=${i}`, 'GET', {"Authorization": `Bearer ${getCookie("access")}`});
+            const buyLetterData = await request(`https://aword-api.onrender.com/game/?for=buyletter&i=${i}`, 'GET', {"Authorization": `Bearer ${getCookie("access")}`});
             loadProgress(buyLetterData['letters'], letters)
             buyLetterData['found'] && fireConfetti();
         });
@@ -46,12 +46,12 @@ keyboardButtons.forEach((e, i) => {
 });
 
 async function load() {
-    lenData = await request("http://127.0.0.1:8000/game/?for=wordlen", 'GET', {'Authorization': `Bearer ${getCookie('access')}`});
+    lenData = await request("https://aword-api.onrender.com/game/?for=wordlen", 'GET', {'Authorization': `Bearer ${getCookie('access')}`});
 
     // Token validation
     if (lenData['detail'] && lenData['code'] === 'token_not_valid') {
         if (lenData['messages'][0]['token_type']==='access') {
-            access_data = await request('http://127.0.0.1:8000/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
+            access_data = await request('https://aword-api.onrender.com/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
             document.cookie = `access=${access_data['access']}`;
             load();
         }
@@ -62,7 +62,7 @@ async function load() {
     loadLetters(i);
     
     // Loading the progress
-    progressData = await request("http://127.0.0.1:8000/game/?for=progress", 'GET', {'Authorization': `Bearer ${getCookie('access')}`});
+    progressData = await request("https://aword-api.onrender.com/game/?for=progress", 'GET', {'Authorization': `Bearer ${getCookie('access')}`});
     if (progressData['found']) {
         const letters = progressData['found']
         const letterElems = document.querySelectorAll('.letter');
@@ -75,6 +75,18 @@ window.addEventListener("keyup", (e) => handleKeyPress(e));
 async function request(url, method, headers, body) {
     const response = await fetch(url, {method:method, headers:headers, body:JSON.stringify(body)})
     data = await response.json();
+    if (data['detail']) {
+        if (!getCookie('refresh')) {
+            window.location.href = 'login.html';
+        }
+        console.log(data);
+        // Invalid ACCESS token
+        if (data['code']==='token_not_valid' && data['messages'] && data['messages'][0]['token_type']==='access') {
+            const refreshData = await request('https://aword-api.onrender.com/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
+            setCookie('access', refreshData['access'], 1);
+        }
+    }
+
     return data;
 }
 
@@ -144,7 +156,7 @@ function getSelectedButton() {
 }
 
 async function tryLetter(l) {
-    const tryData = await request(`http://127.0.0.1:8000/game/?for=tryletter&l=${l}`, 'GET', {'Authorization':`Bearer ${getCookie('access')}`});
+    const tryData = await request(`https://aword-api.onrender.com/game/?for=tryletter&l=${l}`, 'GET', {'Authorization':`Bearer ${getCookie('access')}`});
     return tryData;
 }
 

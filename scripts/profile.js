@@ -35,6 +35,18 @@ function getCookie(key) {
 async function request(url, method, headers, body) {
     const response = await fetch(url, {method:method, headers:headers, body:JSON.stringify(body)})
     data = await response.json();
+    if (data['detail']) {
+        if (!getCookie('refresh')) {
+            window.location.href = 'login.html';
+        }
+        console.log(data);
+        // Invalid ACCESS token
+        if (data['code']==='token_not_valid' && data['messages'] && data['messages'][0]['token_type']==='access') {
+            const refreshData = await request('https://aword-api.onrender.com/account/refresh/', 'POST', {'Content-Type': 'application/json'}, {'refresh':getCookie('refresh')});
+            setCookie('access', refreshData['access'], 1);
+        }
+    }
+
     return data;
 }
 
@@ -107,7 +119,7 @@ async function main() {
     const nodata = document.querySelector('.nodata');
     const table = document.querySelector('.history table');
 
-    user = await request('http://127.0.0.1:8000/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
+    user = await request('https://aword-api.onrender.com/account/', 'GET', {"Authorization":`Bearer ${getCookie('access')}`})
 
     if (user['words']) {
         nodata.style.display = 'none';

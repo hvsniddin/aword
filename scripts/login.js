@@ -9,7 +9,7 @@ form.addEventListener('submit', async (e) => {
     formData = new FormData(form)
     console.log("sending login request");
     data = await requestFD(
-        "http://127.0.0.1:8000/account/login/",
+        "https://aword-api.onrender.com/account/login/",
         "POST",
         formData
     )
