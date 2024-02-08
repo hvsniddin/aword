@@ -15,7 +15,7 @@ async function request(url, method, headers, body) {
     data = await response.json();
     if (data['detail']) {
         if (!getCookie('refresh')) {
-            window.location.href = 'login.html';
+            window.location.href = 'login';
         }
         console.log(data);
         // Invalid ACCESS token

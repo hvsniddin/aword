@@ -27,7 +27,7 @@ form.addEventListener('submit', async (e) => {
     setCookie('access', data["access"], 1)
     setCookie('refresh', data["refresh"], 7)
 
-    window.location.replace("http://127.0.0.1:5500/front/home.html");
+    window.location.replace("home");
 });
 
 

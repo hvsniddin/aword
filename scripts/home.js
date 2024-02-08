@@ -40,7 +40,7 @@ menuButtons.forEach((e, i) => {
                 emptyObserver.disconnect();
                 if (!getCookie("access")) {
                     setTimeout(() => {
-                        window.location.href = 'login.html';
+                        window.location.href = 'login';
                     }, 200);
                     return
                 }

@@ -57,11 +57,10 @@ form.addEventListener('submit', async (e) => {
         }
     }
 
-    document.cookie = '';
-    document.cookie = `access=${data["access"]}`;
-    document.cookie = `refresh=${data["refresh"]}`;
+    setCookie('access', data['access'], 1);
+    setCookie('refresh', data['refresh'], 7);
 
-    window.location.replace("http://127.0.0.1:5500/front/home.html");
+    window.location.replace("home");
 })
 passwordConfirmInput.addEventListener('input', () => {
     if (passwordInput.value!==passwordConfirmInput.value) {
@@ -315,7 +314,7 @@ async function request(url, method, headers, body) {
     data = await response.json();
     if (data['detail']) {
         if (!getCookie('refresh')) {
-            window.location.href = 'login.html';
+            window.location.href = 'login';
         }
         console.log(data);
         // Invalid ACCESS token
@@ -332,4 +331,11 @@ async function requestFD(url, method, body) {
     const response = await fetch(url, {method:method, body:body})
     data = await response.json()
     return data
+}
+
+function setCookie(name, value, days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    var expires = "expires="+ date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
