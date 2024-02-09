@@ -41,7 +41,6 @@
 .letter:hover {
     scale: 1.2;
 }
-.letter:first-child:nth-last-child()
 
 .letter-container {
     perspective: 400px;
