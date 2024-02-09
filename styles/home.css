@@ -101,11 +101,12 @@ body {
 .version {
   position: absolute;
   top: 0;
-  left: 0;
-  /* right: 0; */
+  left: 50%;
+  transform: translateX(-50%);
   padding: .5rem 1rem;
-  background-color: var(--primary);
-  color: var(--on-primary);
+  color: var(--on-surface);
+  font-family: monospace;
+  font-size: .9em;
   border-bottom-right-radius: 5px;
   font-family: monospace;
 }
