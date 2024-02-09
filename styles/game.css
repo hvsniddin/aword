@@ -165,6 +165,7 @@
     position: absolute;
     top: 0;
     left: 50%;
+    text-align: center;
     transform: translateX(-50%);
     background-color: red;
     padding: .5rem 1rem;

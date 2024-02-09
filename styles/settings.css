@@ -26,6 +26,22 @@
         width: 90% !important;
     }
 }
+@media (width < 600px) {
+    .setting {
+        height: unset !important;
+        width: 100% !important;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .setting select,
+    .setting input {
+        height: 2rem;
+        width: 100% !important;
+    }
+    .setting p {
+        padding: 0 !important;
+    }
+}
 
 .menu {
     min-width: 250px;
