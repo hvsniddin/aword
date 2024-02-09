@@ -105,15 +105,15 @@
     aspect-ratio: 2;
 }
 
-@media (width < 1000px) {
+/* @media (width < 1000px) {
     .letter {
         font-size: 1.5em;
     }
-}
+} */
 @media (width < 800px) {
-    .letter {
+    /* .letter {
         font-size: 1.2em;
-    }
+    } */
     .word-container {
         gap: .5rem;
     }
