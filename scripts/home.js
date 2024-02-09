@@ -4,6 +4,15 @@ const menuButtons = document.querySelectorAll('.buttons a');
 let currentSelectedMenu = 0;
 focusItem();
 
+window.addEventListener("pageshow", function (event) {
+    var historyTraversal = event.persisted || 
+      (typeof window.performance != "undefined" && 
+      window.performance.navigation.type === 2);
+    if (historyTraversal) {
+      // Handle page restore.
+      window.location.reload();
+    }
+});
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowUp':
