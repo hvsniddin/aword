@@ -2,6 +2,7 @@ amqp==5.1.1
 APScheduler==3.10.4
 asgiref==3.7.2
 billiard==4.1.0
+Brotli==1.1.0
 celery==5.3.1
 certifi==2024.2.2
 charset-normalizer==3.3.2
@@ -39,3 +40,4 @@ uritemplate==4.1.1
 urllib3==2.2.0
 vine==5.0.0
 wcwidth==0.2.9
+whitenoise==6.6.0
