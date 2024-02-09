@@ -14,6 +14,7 @@
 
 .word-container {
     gap: 1rem;
+    padding: 0 .5rem;
 }
 
 .letter {
@@ -40,6 +41,7 @@
 .letter:hover {
     scale: 1.2;
 }
+.letter:first-child:nth-last-child()
 
 .letter-container {
     perspective: 400px;
@@ -100,6 +102,49 @@
 .keyboard-button-big {
     width: 6rem;
     aspect-ratio: 2;
+}
+
+@media (width < 1000px) {
+    .letter {
+        font-size: 1.5em;
+    }
+}
+@media (width < 800px) {
+    .letter {
+        font-size: 1.2em;
+    }
+    .word-container {
+        gap: .5rem;
+    }
+}
+
+@media (width < 600px) {
+    .keyboard-button {
+        padding: .7rem;
+        font-size: 1.1em;
+    }
+    .letter {
+        font-size: 1.7em;
+        width: 4rem;
+    }
+    .letter:first-child:nth-last-child(15),
+    .letter:first-child:nth-last-child(15) ~ .letter,
+    .letter:first-child:nth-last-child(14),
+    .letter:first-child:nth-last-child(14) ~ .letter,
+    .letter:first-child:nth-last-child(13),
+    .letter:first-child:nth-last-child(13) ~ .letter {
+        font-size: 1em;
+    }
+}
+@media (width < 500px) {
+    .keyboard-button {
+        padding: .5rem;
+        font-size: 1em;
+    }
+    .letter {
+        font-size: 1.4em;
+        width: 3rem;
+    }
 }
 
 .keyboard-button[data-selected="true"] {

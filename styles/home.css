@@ -96,3 +96,15 @@ body {
 .links i:hover {
   color: var(--primary);
 }
+
+.version {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* right: 0; */
+  padding: .5rem 1rem;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border-bottom-right-radius: 5px;
+  font-family: monospace;
+}

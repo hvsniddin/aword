@@ -44,3 +44,14 @@ function setCookie(name, value, days) {
     var expires = "expires="+ date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
+
+function seePassword(e) {
+    const inp = e.parentElement.querySelector('input');
+    if (inp.type === 'password') {
+        inp.type = 'text';
+        e.className = 'fa-regular fa-eye-slash'
+    } else {
+        inp.type = 'password';
+        e.className = 'fa-regular fa-eye'
+    }
+}

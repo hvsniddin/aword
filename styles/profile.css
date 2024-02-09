@@ -3,6 +3,9 @@ body {
     height: unset;
 }
 
+th:not(:first-child) {
+    border-left: 1px solid var(--background);
+}
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -20,6 +23,8 @@ body {
     }
     .user-info {
         position: relative !important;
+        height: unset !important;
+        min-height: calc(100% - 2rem);
     }
 }
 
@@ -63,23 +68,38 @@ body::-webkit-scrollbar {
 
 .meta {
     width: 100%;
-    height: 100%;
     margin-top: 2rem;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 .meta .info {
+    width: calc(50% - .5rem);
+    aspect-ratio: 1.1;
     background-color: var(--background);
     padding: .5rem;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
-    font-size: 1.5em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+.meta .info .title {
+    font-size: .8em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 100;
+}
+.meta .info .value {
+    font-size: 2.7em;
+    font-weight: 900;
 }
 
 .main-stats {
     max-width: calc(100vw - 2rem);
+    min-width: 300px;
+    
     min-height: calc(100vh - 2rem);
 
     display: flex;
@@ -115,6 +135,7 @@ body::-webkit-scrollbar {
 .history {
     width: 100%;
     height: 100%;
+    overflow-x: auto;
 }
 
 table {

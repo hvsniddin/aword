@@ -19,7 +19,7 @@ const submit = document.querySelector('.stepper-container button[type="submit"]'
 
 const grecaptcha = document.querySelector('.g-recaptcha');
 
-
+// getCookie()
 
 [usernameInput, emailInput, passwordInput, errorText].forEach((e) => {
     e.addEventListener('animationend', () => {
@@ -338,4 +338,15 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + (days*24*60*60*1000));
     var expires = "expires="+ date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function seePassword(e) {
+    const inp = e.parentElement.querySelector('input');
+    if (inp.type === 'password') {
+        inp.type = 'text';
+        e.className = 'fa-regular fa-eye-slash'
+    } else {
+        inp.type = 'password';
+        e.className = 'fa-regular fa-eye'
+    }
 }

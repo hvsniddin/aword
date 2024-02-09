@@ -135,9 +135,17 @@
     gap: 1rem;
     margin-top: auto;
 }
-
+.login-form {
+    align-items: end;
+}
+.login-form > *:not(a) {
+    width: 100%;
+}
 [type="submit"] {
     margin-top: auto;
+}
+input::placeholder {
+    user-select: none;
 }
 
 .reg-main form .input-container>input {
@@ -189,15 +197,22 @@
     transition: 500ms, border 150ms, color 150ms;
 }
 
-.input i {
+.signup-form .step:nth-child(1) .input i {
     position: absolute;
     right: .5rem;
     top: 50%;
+    transform: translateY(-50%);
     animation: rotate 1.3s linear infinite both;
-    transform-origin: center;
     display: none;
 }
 
+.signup-form .step:nth-child(3) .input i,
+.login-form .input i {
+    position: absolute;
+    right: .5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .input:has(input:invalid:not(:focus)),
 .input input:invalid span {

@@ -34,7 +34,7 @@
                 <div class="counter"></div>
             </div>
             <p class="error shake"></p>
-            <form action="http://127.0.0.1:8000/account/signup/" method="post" class="signup-form">
+            <form action="" method="post" class="signup-form">
                 <div class="step-container">
                     <div class="step step-active">
                         <div class="step-wrapper">
@@ -71,10 +71,12 @@
                                 <div class="input">
                                     <input type="password" name="password1" pattern="^(?=.*\d).{8,}$" title="At least 8 characters long and must contain numbers" placeholder=" ">
                                     <span>Password</span>
+                                    <i class="fa-regular fa-eye" onclick="seePassword(this)"></i>
                                 </div>
                                 <div class="input">
                                     <input type="password" name="password2" pattern="^(?=.*\d).{8,}$" title="At least 8 characters long and must contain numbers" placeholder=" ">
                                     <span>Confirm password</span>
+                                    <i class="fa-regular fa-eye" onclick="seePassword(this)"></i>
                                 </div>
                             </div>
                             <p>Now create a strong, reliable password</p>

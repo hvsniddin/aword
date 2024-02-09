@@ -4,6 +4,7 @@
 
     display: flex;
     align-items: start;
+    /* grid-template-columns: 1fr 3fr; */
     gap: 1rem;
 
     padding: 1rem 1rem;
@@ -11,6 +12,19 @@
 .wrapper > * {
     background-color: var(--surface);
     border-radius: 5px;
+}
+@media (width < 780px) {
+    .menu {
+        min-width: unset !important;
+    }
+    a span:nth-child(2) {
+        display: none !important;
+    }
+}
+@media (width < 1000px) {
+    .setting {
+        width: 90% !important;
+    }
 }
 
 .menu {
@@ -148,9 +162,6 @@ form button {
     visibility: hidden;
 }
 .notavailable {
-    cursor: not-allowed;
-}
-.notavailable a {
     pointer-events: none;
     user-select: none;
 }
