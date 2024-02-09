@@ -18,7 +18,7 @@ api_schema_view = get_schema_view(
 urlpatterns = [
     path('stats/', admin.site.urls),
 
-    path('api', api_schema_view.with_ui('swagger')),
+    path('docs', api_schema_view.with_ui('swagger')),
     path('account/', include('account.urls')),
     path('game/', include('game.urls')),
 ]
