@@ -13,7 +13,7 @@ body {
   width: 1em;
   height: 1em;
   transform-origin: center;
-  animation: rotate;
+  animation: rotateFl;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
@@ -107,4 +107,10 @@ body {
   color: var(--on-primary);
   border-bottom-right-radius: 5px;
   font-family: monospace;
+}
+
+@keyframes rotateFl {
+  to {
+    rotate: 360deg;
+  }
 }
