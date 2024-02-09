@@ -71,6 +71,7 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: 0 1rem;
     /* opacity: .5;
     pointer-events: none; */
 }
@@ -140,10 +141,18 @@
     .keyboard-button {
         padding: .5rem;
         font-size: 1em;
+        border-radius: 2px;
     }
     .letter {
         font-size: 1.4em;
         width: 3rem;
+    }
+    .keyboard-wrapper {
+        min-width: 100%;
+        gap: .2rem;
+    }
+    .keyboard-row {
+        gap: .2rem;
     }
 }
 

@@ -6,7 +6,7 @@ error.addEventListener('animationend', () => {
     error.classList.remove('showerror');
 });
 
-alert(window.outerWidth)
+// alert(window.outerWidth)
 
 const clearKey = document.querySelector('.keyboard-button[data-func="clear"]');
 const enterKey = document.querySelector('.keyboard-button[data-func="enter"]');
